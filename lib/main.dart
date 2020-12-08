@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:provider/repositories/auth_repository.dart';
+import 'package:provider/repositories/service_provider_update_repository.dart';
+import 'package:provider/router/route_constants.dart';
+import 'package:provider/router/router.dart';
+import 'package:provider/state/auth_state.dart';
+import 'package:provider/state/service_provider_update_state.dart';
+import 'package:provider/ui/Auth/signup_page.dart';
+import 'package:provider/ui/profile_page.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(InstantSewaProvider());
 }
 
-class MyApp extends StatelessWidget {
+class InstantSewaProvider extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+    return Injector(
+        inject:
+        [
+          Inject<AuthState>(() => AuthState(AuthRepositoryImpl())),
+          Inject<ServiceProviderUpdateState>(() => ServiceProviderUpdateState(ServiceProviderUpdateRepositoryImpl())),
+        ], builder:(context){
+          return MaterialApp(
+            home: ProfilePage(),
+            debugShowCheckedModeBanner: false,
+            onGenerateRoute: Routers.onGenerateRoute,
+            initialRoute: loginRoute,
+          );
+    });
   }
 }
 
