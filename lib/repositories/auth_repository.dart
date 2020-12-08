@@ -55,17 +55,17 @@ class AuthRepositoryImpl implements AuthRepository {
           await LocalStorage.setItem(USERNAME,user['username']);
           await LocalStorage.setItem(FUllNAME,user['fullname']);
           await LocalStorage.setItem(PHONE,user['phoneno']);
-         // Navigator.pushNamed(RM.context, addressUpdateRoute);
+          Navigator.pushNamed(RM.context, addressUpdateRoute);
         }
       else if(user['fullname'] != null)
       {
         await LocalStorage.setItem(FUllNAME,user['fullname']);
         await LocalStorage.setItem(USERNAME,user['username']);
-        //Navigator.pushNamed(RM.context, phoneUpdateRoute);
+        Navigator.pushNamed(RM.context, phoneUpdateRoute);
       }
       else
         {await LocalStorage.setItem(USERNAME,user['username']);
-          //Navigator.pushNamed(RM.context, fullNameUpdateRoute);
+          Navigator.pushNamed(RM.context, fullNameUpdateRoute);
         }
       return;
     } on DioError catch (e) {
@@ -109,6 +109,13 @@ class AuthRepositoryImpl implements AuthRepository {
           LocalStorage.deleteItem (TOKEN);
           SharedPreferences localStorage = await SharedPreferences.getInstance();
           await localStorage.remove('user');
+           LocalStorage.deleteItem(FUllNAME);
+           LocalStorage.deleteItem(PHONE);
+           LocalStorage.deleteItem(USERNAME);
+           LocalStorage.deleteItem(ADDRESS_ADDRESS);
+           LocalStorage.deleteItem(ADDRESS_LATITUDE);
+           LocalStorage.deleteItem(ADDRESS_LONGITUDE);
+
         }
     }on DioError catch (e) {
       showNetworkError(e);

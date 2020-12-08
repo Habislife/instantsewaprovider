@@ -1,8 +1,8 @@
-import 'package:provider/state/service_provider_update_state.dart';
+import 'package:provider/state/service_profile_update_state.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 class FullNameUpdateModel {
-  final ServiceProviderUpdateState _serviceProviderUpdateState = Injector.get<ServiceProviderUpdateState>();
+  final ServiceProviderUpdateState _serviceUserUpdateState = Injector.get<ServiceProviderUpdateState>();
   String fullname;
   String gender;
   void setFullName(String fullname) {
@@ -16,7 +16,7 @@ class FullNameUpdateModel {
   }
   Future<void> updateFullName() async
   {
-    await _serviceProviderUpdateState.updateFullName(fullName: fullname,gender: gender);
+    await _serviceUserUpdateState.updateFullName(fullName: fullname,gender: gender);
   }
 
 }

@@ -1,6 +1,7 @@
-import 'package:provider/state/service_provider_update_state.dart';
-import 'package:states_rebuilder/states_rebuilder.dart';
+import 'package:provider/state/service_profile_update_state.dart';
 import 'package:search_map_place/search_map_place.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
+
 class AddressUpdateModel {
   final ServiceProviderUpdateState _serviceUserUpdateState = Injector.get<ServiceProviderUpdateState>();
   String address;

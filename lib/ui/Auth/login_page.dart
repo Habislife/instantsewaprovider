@@ -105,20 +105,20 @@ class _LoginPageState extends State<LoginPage> {
                                       child: TextFormField(
                                         onChanged: (String email) {
                                           _singletonLogInFormModel.setState(
-                                                  (state) => state.setEmail(email),
+                                              (state) => state.setEmail(email),
                                               catchError: true);
                                         },
                                         decoration: InputDecoration(
                                           errorText:
-                                          _singletonLogInFormModel.hasError
-                                              ? _singletonLogInFormModel
-                                              .error.message
-                                              : null,
+                                              _singletonLogInFormModel.hasError
+                                                  ? _singletonLogInFormModel
+                                                      .error.message
+                                                  : null,
                                           border: InputBorder.none,
                                           prefixIcon: Icon(Icons.email),
                                           hintText: "Email",
                                           hintStyle:
-                                          TextStyle(color: Colors.grey),
+                                              TextStyle(color: Colors.grey),
                                         ),
                                       ),
                                     );
@@ -135,22 +135,22 @@ class _LoginPageState extends State<LoginPage> {
                                     child: TextFormField(
                                       onChanged: (String password) {
                                         _singletonLogInFormModel.setState(
-                                                (state) =>
+                                            (state) =>
                                                 state.setPassword(password),
                                             catchError: true);
                                       },
                                       obscureText: true,
                                       decoration: InputDecoration(
                                         errorText:
-                                        _singletonLogInFormModel.hasError
-                                            ? _singletonLogInFormModel
-                                            .error.message
-                                            : null,
+                                            _singletonLogInFormModel.hasError
+                                                ? _singletonLogInFormModel
+                                                    .error.message
+                                                : null,
                                         border: InputBorder.none,
                                         prefixIcon: Icon(Icons.lock),
                                         hintText: "Password",
                                         hintStyle:
-                                        TextStyle(color: Colors.grey),
+                                            TextStyle(color: Colors.grey),
                                       ),
                                     ),
                                   );
@@ -165,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                         Text(
                           "Forgot Password?",
                           style:
-                          TextStyle(color: Color.fromRGBO(49, 39, 79, .6)),
+                              TextStyle(color: Color.fromRGBO(49, 39, 79, .6)),
                         ),
                         SizedBox(
                           height: 15,
@@ -185,12 +185,12 @@ class _LoginPageState extends State<LoginPage> {
                                           key: _key,
                                           color: Colors.red[700],
                                           message:
-                                          "Data is invalid,please fill before submitting the form");
+                                              "Data is invalid,please fill before submitting the form");
                                     } else {
                                       _singletonLogInFormModel.setState(
-                                              (signInFormState) async {
-                                            await signInFormState.submitSignIn();
-                                          },
+                                          (signInFormState) async {
+                                        await signInFormState.submitSignIn();
+                                      },
                                           onError: (context, error) =>
                                               showSnackBar(
                                                   key: _key,
@@ -201,7 +201,7 @@ class _LoginPageState extends State<LoginPage> {
                                   color: _purple,
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
-                                      BorderRadius.circular(25.0)),
+                                          BorderRadius.circular(25.0)),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 15.0, vertical: 12.0),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/application/InstantSewa_api.dart';
@@ -7,14 +8,14 @@ import 'package:provider/application/storage/localstorage.dart';
 import 'package:provider/application/storage/storage_keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class ServiceProviderUpdateRepository
+abstract class ServiceProfileUpdateRepository
 {
   Future<bool> updateFullName({@required String fullName,@required String gender});
   Future<bool> updateAddress({@required String address,@required double latitude,@required double longitude});
   Future<bool> updatePhone({@required String phoneNo});
 }
 
-class ServiceProviderUpdateRepositoryImpl implements ServiceProviderUpdateRepository
+class ServiceProfileUpdateRepositoryImpl implements ServiceProfileUpdateRepository
 {
   @override
   Future<bool> updateAddress({String address,double latitude,double longitude,})

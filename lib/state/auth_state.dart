@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/repositories/auth_repository.dart';
-
 
 class AuthState {
   final AuthRepository _authRepository;

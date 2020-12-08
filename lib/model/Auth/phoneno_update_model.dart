@@ -1,4 +1,4 @@
-import 'package:provider/state/service_provider_update_state.dart';
+import 'package:provider/state/service_profile_update_state.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 class PhoneUpdateModel {
