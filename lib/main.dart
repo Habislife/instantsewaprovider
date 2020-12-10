@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/application/storage/storage_keys.dart';
 import 'package:provider/repositories/auth_repository.dart';
 import 'package:provider/repositories/service_profile_update_repository.dart';
 import 'package:provider/router/route_constants.dart';
@@ -38,7 +39,15 @@ class InstantSewaProvider extends StatelessWidget {
             home: ProfilePage(),
             debugShowCheckedModeBanner: false,
             onGenerateRoute: Routers.onGenerateRoute,
-            initialRoute: loginRoute,
+            initialRoute: LocalStorage.getItem(TOKEN) != null
+                ? LocalStorage.getItem(FUllNAME) == null
+                ? fullNameUpdateRoute
+                : LocalStorage.getItem(PHONE) == null
+                ? phoneUpdateRoute
+                : LocalStorage.getItem(ADDRESS_ADDRESS) == null
+                ? addressUpdateRoute
+                : profileRoute
+                : loginRoute,
           );
       },
     );
