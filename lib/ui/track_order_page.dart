@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/state/tracking_state.dart';
+import 'package:provider/ui/ongoing_page.dart';
 import 'package:provider/util/hexcode.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
@@ -31,7 +32,7 @@ class _TrackOrderState extends State<TrackOrder>
           title: Text('Track Order'),
           backgroundColor: _purple,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: Icon(Icons.menu),
             onPressed: () {
               //Navigator.pushNamed(context, homeRoute);
             },
@@ -64,14 +65,14 @@ class _TrackOrderState extends State<TrackOrder>
                         children: [
                           GestureDetector(
                             onTap: () {
-                              //Navigator.push(
-                                //context,
-                                //MaterialPageRoute(
-                                  //builder: (BuildContext context) =>
-                                      //OngoingPage(orderId: orders.id,
-                                      //cartName: orders.cartName),
-                              //   ),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      OngoingPage(orderId: orders.id,
+                                      cartName: orders.cartName),
+                                ),
+                              );
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
@@ -167,24 +168,24 @@ class _TrackOrderState extends State<TrackOrder>
                   shrinkWrap: true,
                   children: [
                     ...model.state.completedProject.map(
-                      (orders) => Column(
+                          (orders) => Column(
                         children: [
                           GestureDetector(
                             onTap: () {
                               // Navigator.push(
                               //   context,
-                                //MaterialPageRoute(
-                                  // builder: (BuildContext context) =>
-                                  //     CompletedPage(orderId: orders.id,
-                                //     cartName: orders.cartName),
+                              //MaterialPageRoute(
+                              // builder: (BuildContext context) =>
+                              //     CompletedPage(orderId: orders.id,
+                              //     cartName: orders.cartName),
                               //   ),
-                               //);
+                              //);
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Container(
                                 height:
-                                    (MediaQuery.of(context).size.height) * 0.15,
+                                (MediaQuery.of(context).size.height) * 0.15,
                                 decoration: BoxDecoration(
                                   color: Colors.white10,
                                   borderRadius: BorderRadius.circular(10),
@@ -193,13 +194,13 @@ class _TrackOrderState extends State<TrackOrder>
                                   elevation: 0.5,
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                           children: [
                                             Text(
                                               orders.cartName,
@@ -230,16 +231,16 @@ class _TrackOrderState extends State<TrackOrder>
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                           children: [
                                             Icon(
                                               Icons.circle,
                                               color: orders.status ==
-                                                      'Cancelled'
+                                                  'Cancelled'
                                                   ? Colors.redAccent
                                                   : orders.status == 'Completed'
-                                                      ? Colors.blueAccent
-                                                      : Colors.yellowAccent,
+                                                  ? Colors.blueAccent
+                                                  : Colors.yellowAccent,
                                               size: 13,
                                             ),
                                             Text(

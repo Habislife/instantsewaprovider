@@ -3,10 +3,12 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/application/storage/storage_keys.dart';
 import 'package:provider/repositories/auth_repository.dart';
 import 'package:provider/repositories/service_profile_update_repository.dart';
+import 'package:provider/repositories/tracking_repository.dart';
 import 'package:provider/router/route_constants.dart';
 import 'package:provider/router/router.dart';
 import 'package:provider/state/auth_state.dart';
 import 'package:provider/state/service_profile_update_state.dart';
+import 'package:provider/state/tracking_state.dart';
 import 'package:provider/ui/profile_page.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 import 'application/storage/localstorage.dart';
@@ -33,6 +35,7 @@ class InstantSewaProvider extends StatelessWidget {
         Inject<AuthState>(() => AuthState(AuthRepositoryImpl())),
         Inject<ServiceProviderUpdateState>(
             () => ServiceProviderUpdateState(ServiceProfileUpdateRepositoryImpl())),
+        Inject<TrackingState>(() => TrackingState(TrackingRepositoryImpl())),
       ],
       builder: (context) {
         return  MaterialApp(
@@ -46,7 +49,7 @@ class InstantSewaProvider extends StatelessWidget {
                 ? phoneUpdateRoute
                 : LocalStorage.getItem(ADDRESS_ADDRESS) == null
                 ? addressUpdateRoute
-                : profileRoute
+                : homeRoute
                 : loginRoute,
           );
       },

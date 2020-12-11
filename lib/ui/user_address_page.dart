@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/model/Auth/address_update_model.dart';
+import 'package:provider/router/route_constants.dart';
 import 'package:provider/widgets/show_snackbar.dart';
 import 'package:search_map_place/search_map_place.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
@@ -127,7 +128,7 @@ class _UserAddressPageState extends State<UserAddressPage> {
                                   return TextFormField(
                                     onChanged: (String address) {
                                       _addressUpdateModel.setState(
-                                          (state) => state.setAddress(address),
+                                              (state) => state.setAddress(address),
                                           catchError: true);
                                     },
                                     decoration: InputDecoration(
@@ -158,9 +159,9 @@ class _UserAddressPageState extends State<UserAddressPage> {
                                         _controller.animateCamera(
                                           CameraUpdate.newLatLngBounds(geolocation.bounds, 0),
                                         );
-                                       _addressUpdateModel.setState(
-                                                 (state) => state.setLatLang(geolocation),
-                                           catchError: true);
+                                        _addressUpdateModel.setState(
+                                                (state) => state.setLatLang(geolocation),
+                                            catchError: true);
                                       },
                                     );
                                   }
@@ -195,13 +196,13 @@ class _UserAddressPageState extends State<UserAddressPage> {
                                         key: _key,
                                         color: Colors.red,
                                         message:
-                                            "Data is invalid,please fill before submitting the form");
+                                        "Data is invalid,please fill before submitting the form");
                                   } else {
                                     _addressUpdateModel.setState(
-                                        (addressState) async {
-                                      await addressState.updateAddress();
-                                      //Navigator.pushNamed(context, homeRoute);
-                                    },
+                                            (addressState) async {
+                                          await addressState.updateAddress();
+                                          Navigator.pushNamed(context, homeRoute);
+                                        },
                                         onError: (context, error) =>
                                             showSnackBar(
                                                 key: _key,

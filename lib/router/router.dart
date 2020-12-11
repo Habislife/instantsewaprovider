@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/router/route_constants.dart';
 import 'package:provider/ui/Auth/login_page.dart';
 import 'package:provider/ui/Auth/signup_page.dart';
+import 'package:provider/ui/home_page.dart';
 import 'package:provider/ui/not_found_page_views.dart';
 import 'package:provider/ui/profile_page.dart';
 import 'package:provider/ui/user_address_page.dart';
@@ -10,8 +11,8 @@ import 'package:provider/ui/user_phone_page.dart';
 class Routers {
   static Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
-      // case homeRoute:
-      //   return MaterialPageRoute(builder: (_) => HomePage());
+       case homeRoute:
+         return MaterialPageRoute(builder: (_) => HomePage());
       case loginRoute:
         return MaterialPageRoute(builder: (_) => LoginPage());
       case signUpRoute:

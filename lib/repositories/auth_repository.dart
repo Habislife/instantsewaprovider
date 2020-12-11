@@ -48,7 +48,7 @@ class AuthRepositoryImpl implements AuthRepository {
         await LocalStorage.setItem(ADDRESS_ADDRESS,user['address_address']);
         await LocalStorage.setItem(ADDRESS_LATITUDE,user['address_latitude'].toString());
         await LocalStorage.setItem(ADDRESS_LONGITUDE,user['address_longitude'].toString());
-        Navigator.pushNamed(RM.context, profileRoute);
+        Navigator.pushNamed(RM.context,homeRoute);
       }
       else if(user['phoneno'] != null)
         {
