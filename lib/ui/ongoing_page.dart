@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/application/classes/tracker/cart.dart';
 import 'package:provider/state/tracking_state.dart';
@@ -56,7 +57,7 @@ class _OngoingPageState extends State<OngoingPage>
                 // );
               },
               child: Icon(
-                Icons.qr_code_scanner_sharp,
+                MaterialCommunityIcons.qrcode_scan,
                 color: Colors.white,
               ),
             ),
