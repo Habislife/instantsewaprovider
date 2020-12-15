@@ -15,7 +15,7 @@ class _AllCategoryListState extends State<AllCategoryList>
     with AutomaticKeepAliveClientMixin {
   List<String> subCategoryList;
   final _categoriesStateRM = RM.get<HomeState>();
-  bool value = false;
+  bool _isSelected= false;
 
   @override
   void initState() {
@@ -78,24 +78,18 @@ class _AllCategoryListState extends State<AllCategoryList>
                                         fontWeight: FontWeight.w600,
                                         letterSpacing: 0.5),
                                   ),
-                                  value: value,
-                                  onChanged: (value) {
+                                  value: _isSelected,
+                                  onChanged: (bool newValue) {
                                     setState(() {
-                                      this.value = value;
-                                      if(value)
-                                        {
-                                          subCategoryList.add(subCategory.id);
-                                        }
-                                      else{
-                                        subCategoryList.remove(subCategory.id);
-                                      }
+                                      _isSelected = newValue;
                                     });
                                   },
                                   checkColor: Colors.white,
                                   controlAffinity: ListTileControlAffinity.trailing,
-                                )
+                                ),
                               ],
-                            ),),
+                            ),
+                            ),
                           ],
                         ),
                       ],
