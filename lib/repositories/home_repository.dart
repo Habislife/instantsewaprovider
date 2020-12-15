@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/application/InstantSewa_api.dart';
 import 'package:provider/application/classes/category/category.dart';
 import 'package:provider/application/classes/errors/common_error.dart';
@@ -12,6 +13,9 @@ abstract class HomeRepository
 {
   Future<bool> serviceCheck();
   Future<List<Category>> getCategory();
+  Future addServices({
+    @required List<String> subcategories
+  });
 }
 class HomeRepositoryImpl implements HomeRepository{
   @override
@@ -56,6 +60,31 @@ class HomeRepositoryImpl implements HomeRepository{
       throw showNetworkError(e);
     }
 
+  }
+
+  @override
+  Future addServices({List<String> subcategories}) async
+  {
+    try {
+      String id;
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      var user = jsonDecode(localStorage.getString('user'));
+      id = user['id'].toString();
+      while (subcategories.isNotEmpty) {
+        Response response = await InstantSewaAPI.dio
+            .post("/serviceChecker", data: {
+          "service_provider_id": id,
+          "subcategories_id":subcategories[0]
+        },
+            options: Options(headers: {
+          'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
+        }));
+        subcategories.remove(subcategories[0]);
+      }
+    }
+    on DioError catch (e) {
+      throw showNetworkError(e);
+    }
   }
 
 }

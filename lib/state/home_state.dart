@@ -9,8 +9,11 @@ class HomeState {
   Future<bool> serviceCheck() async {
     return await _homeRepository.serviceCheck();
   }
-      Future getCategory() async
-      {
+  Future getCategory() async {
         _category =  await _homeRepository.getCategory();
-      }
+  }
+  Future addServices(List<String> subCategory) async
+  {
+    await _homeRepository.addServices(subcategories:subCategory);
+  }
 }
