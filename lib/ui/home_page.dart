@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/ui/categories_list_page.dart';
 import 'package:provider/ui/profile_page.dart';
 import 'package:provider/ui/track_order_page.dart';
 import 'package:provider/util/hexcode.dart';
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<Widget> _widgetList = [
-    TrackOrder(),
+    AllCategoryList(),
     ProfilePage(),
   ];
 

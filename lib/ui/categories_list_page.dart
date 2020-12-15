@@ -13,14 +13,13 @@ class AllCategoryList extends StatefulWidget {
 
 class _AllCategoryListState extends State<AllCategoryList>
     with AutomaticKeepAliveClientMixin {
-  List<String> subCategoryList;
+  List<String> subCategoryList = [];
   final _categoriesStateRM = RM.get<HomeState>();
-  bool _isSelected= false;
+  bool _isSelected = false;
 
   @override
   void initState() {
-    _categoriesStateRM
-        .setState((categoryState) => categoryState.getCategory());
+    _categoriesStateRM.setState((categoryState) => categoryState.getCategory());
     super.initState();
   }
 
@@ -32,6 +31,21 @@ class _AllCategoryListState extends State<AllCategoryList>
       appBar: AppBar(
         title: Text('Select Services'),
         backgroundColor: _purple,
+        actions: [
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 11.0, horizontal: 8.0),
+            child: RaisedButton(
+              color: Colors.white,
+              shape: StadiumBorder(),
+              onPressed: () {},
+              child: Text(
+                'Next',
+                style: TextStyle(color: Colors.black, fontSize: 18),
+              ),
+            ),
+          )
+        ],
       ),
       body: StateBuilder<HomeState>(
         observe: () => _categoriesStateRM,
@@ -66,29 +80,35 @@ class _AllCategoryListState extends State<AllCategoryList>
                             ),
                           ),
                           children: <Widget>[
-                            ...category.subCategory.map((subCategory) =>
-                            Column(
-                              children: [
-                                CheckboxListTile(
-                                  activeColor: _purple,
-                                  title: new Text(
-                                    subCategory.subCategoryName,
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        letterSpacing: 0.5),
+                            ...category.subCategory.map(
+                              (subCategory) => Column(
+                                children: [
+                                  CheckboxListTile(
+                                    activeColor: _purple,
+                                    title: new Text(
+                                      subCategory.subCategoryName,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          letterSpacing: 0.5),
+                                    ),
+                                    value: subCategory.isSelected,
+                                    onChanged: (bool newValue) {
+                                      setState(() {
+                                        subCategory.isSelected = newValue;
+                                        subCategory.isSelected
+                                            ? subCategoryList
+                                                .add(subCategory.id)
+                                            : subCategoryList
+                                                .remove(subCategory.id);
+                                      });
+                                    },
+                                    checkColor: Colors.white,
+                                    controlAffinity:
+                                        ListTileControlAffinity.trailing,
                                   ),
-                                  value: _isSelected,
-                                  onChanged: (bool newValue) {
-                                    setState(() {
-                                      _isSelected = newValue;
-                                    });
-                                  },
-                                  checkColor: Colors.white,
-                                  controlAffinity: ListTileControlAffinity.trailing,
-                                ),
-                              ],
-                            ),
+                                ],
+                              ),
                             ),
                           ],
                         ),

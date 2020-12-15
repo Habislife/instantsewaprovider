@@ -15,6 +15,7 @@ import 'application/storage/localstorage.dart';
 import 'repositories/home_repository.dart';
 import 'state/home_state.dart';
 import 'ui/home_page.dart';
+
 Future<void> getPermission() async {
   PermissionStatus permission =
       await PermissionHandler().checkPermissionStatus(PermissionGroup.location);
@@ -36,26 +37,27 @@ class InstantSewaProvider extends StatelessWidget {
     return Injector(
       inject: [
         Inject<AuthState>(() => AuthState(AuthRepositoryImpl())),
-        Inject<ServiceProviderUpdateState>(
-            () => ServiceProviderUpdateState(ServiceProfileUpdateRepositoryImpl())),
+        Inject<ServiceProviderUpdateState>(() =>
+            ServiceProviderUpdateState(ServiceProfileUpdateRepositoryImpl())),
         Inject<TrackingState>(() => TrackingState(TrackingRepositoryImpl())),
-        Inject<HomeState>(() =>HomeState(HomeRepositoryImpl())),
+        Inject<HomeState>(() => HomeState(HomeRepositoryImpl())),
       ],
       builder: (context) {
-        return  MaterialApp(
-            home: HomePage(),
-            debugShowCheckedModeBanner: false,
-            onGenerateRoute: Routers.onGenerateRoute,
-            initialRoute: LocalStorage.getItem(TOKEN) != null
-                ? LocalStorage.getItem(FUllNAME) == null
-                ? fullNameUpdateRoute
-                : LocalStorage.getItem(PHONE) == null
-                ? phoneUpdateRoute
-                : LocalStorage.getItem(ADDRESS_ADDRESS) == null
-                ? addressUpdateRoute
-                : homeRoute
-                : loginRoute,
-          );
+        return MaterialApp(
+          home: HomePage(),
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(primarySwatch: Colors.deepPurple),
+          onGenerateRoute: Routers.onGenerateRoute,
+          initialRoute: LocalStorage.getItem(TOKEN) != null
+              ? LocalStorage.getItem(FUllNAME) == null
+                  ? fullNameUpdateRoute
+                  : LocalStorage.getItem(PHONE) == null
+                      ? phoneUpdateRoute
+                      : LocalStorage.getItem(ADDRESS_ADDRESS) == null
+                          ? addressUpdateRoute
+                          : homeRoute
+              : loginRoute,
+        );
       },
     );
   }
