@@ -27,7 +27,7 @@ class HomeRepositoryImpl implements HomeRepository{
       }, options: Options(headers: {
         'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
       }));
-      if(response.data<3)
+      if(int.parse(response.data)<3)
         {
           return false;
         }

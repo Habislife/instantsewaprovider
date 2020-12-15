@@ -8,6 +8,9 @@ import 'package:provider/ui/profile_page.dart';
 import 'package:provider/ui/user_address_page.dart';
 import 'package:provider/ui/user_info_page.dart';
 import 'package:provider/ui/user_phone_page.dart';
+
+import '../ui/categories_list_page.dart';
+import '../ui/track_order_page.dart';
 class Routers {
   static Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -25,8 +28,10 @@ class Routers {
        return MaterialPageRoute(builder: (_) => ProfilePage());
       case addressUpdateRoute:
         return MaterialPageRoute(builder: (_)=>UserAddressPage());
-      // case trackerRoute:
-      //   return MaterialPageRoute(builder: (_) => TrackOrder());
+       case trackerRoute:
+         return MaterialPageRoute(builder: (_) => TrackOrder());
+      case serviceSelectionRoute:
+        return MaterialPageRoute(builder: (_) => AllCategoryList());
       default:
         return MaterialPageRoute(builder: (_) => NotFoundPage());
     }

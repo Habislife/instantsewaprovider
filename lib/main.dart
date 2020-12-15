@@ -12,6 +12,9 @@ import 'package:provider/state/tracking_state.dart';
 import 'package:provider/ui/profile_page.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 import 'application/storage/localstorage.dart';
+import 'repositories/home_repository.dart';
+import 'state/home_state.dart';
+import 'ui/home_page.dart';
 Future<void> getPermission() async {
   PermissionStatus permission =
       await PermissionHandler().checkPermissionStatus(PermissionGroup.location);
@@ -36,10 +39,11 @@ class InstantSewaProvider extends StatelessWidget {
         Inject<ServiceProviderUpdateState>(
             () => ServiceProviderUpdateState(ServiceProfileUpdateRepositoryImpl())),
         Inject<TrackingState>(() => TrackingState(TrackingRepositoryImpl())),
+        Inject<HomeState>(() =>HomeState(HomeRepositoryImpl())),
       ],
       builder: (context) {
         return  MaterialApp(
-            home: ProfilePage(),
+            home: HomePage(),
             debugShowCheckedModeBanner: false,
             onGenerateRoute: Routers.onGenerateRoute,
             initialRoute: LocalStorage.getItem(TOKEN) != null

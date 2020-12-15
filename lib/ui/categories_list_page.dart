@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
-import '../model/service_model.dart';
-import '../state/category_state.dart';
-import '../ui/sub_categories_page.dart';
+import '../application/classes/category/category.dart';
+import '../state/home_state.dart';
+import '../state/home_state.dart';
 import '../util/hexcode.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 // ignore: must_be_immutable
 class AllCategoryList extends StatefulWidget {
-  List<Service> category;
-  AllCategoryList({this.category});
-
   @override
   _AllCategoryListState createState() => _AllCategoryListState();
 }
 
 class _AllCategoryListState extends State<AllCategoryList>
     with AutomaticKeepAliveClientMixin {
-  final _categoriesStateRM = RM.get<CategoryState>();
-
+  List<String> subCategoryList;
+  final _categoriesStateRM = RM.get<HomeState>();
   bool value = false;
 
   @override
   void initState() {
     _categoriesStateRM
-        .setState((categoryState) => categoryState.getAllCategories());
+        .setState((categoryState) => categoryState.getCategory());
     super.initState();
   }
 
@@ -36,7 +33,7 @@ class _AllCategoryListState extends State<AllCategoryList>
         title: Text('Select Services'),
         backgroundColor: _purple,
       ),
-      body: StateBuilder<CategoryState>(
+      body: StateBuilder<HomeState>(
         observe: () => _categoriesStateRM,
         builder: (context, model) {
           return Padding(
@@ -69,24 +66,36 @@ class _AllCategoryListState extends State<AllCategoryList>
                             ),
                           ),
                           children: <Widget>[
-                            CheckboxListTile(
-                              activeColor: _purple,
-                              title: new Text(
-                                'Hello',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing: 0.5),
-                              ),
-                              value: value,
-                              onChanged: (value) {
-                                setState(() {
-                                  this.value = value;
-                                });
-                              },
-                              checkColor: Colors.white,
-                              controlAffinity: ListTileControlAffinity.trailing,
-                            ),
+                            ...category.subCategory.map((subCategory) =>
+                            Column(
+                              children: [
+                                CheckboxListTile(
+                                  activeColor: _purple,
+                                  title: new Text(
+                                    subCategory.subCategoryName,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: 0.5),
+                                  ),
+                                  value: value,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      this.value = value;
+                                      if(value)
+                                        {
+                                          subCategoryList.add(subCategory.id);
+                                        }
+                                      else{
+                                        subCategoryList.remove(subCategory.id);
+                                      }
+                                    });
+                                  },
+                                  checkColor: Colors.white,
+                                  controlAffinity: ListTileControlAffinity.trailing,
+                                )
+                              ],
+                            ),),
                           ],
                         ),
                       ],

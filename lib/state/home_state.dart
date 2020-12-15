@@ -6,10 +6,9 @@ class HomeState {
   HomeState(this._homeRepository):assert(_homeRepository != null);
   List<Category> _category = [];
   List<Category> get categories => _category;
-      Future<bool> serviceCheck()
-      {
-        return _homeRepository.serviceCheck();
-      }
+  Future<bool> serviceCheck() async {
+    return await _homeRepository.serviceCheck();
+  }
       Future getCategory() async
       {
         _category =  await _homeRepository.getCategory();
