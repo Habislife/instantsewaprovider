@@ -9,6 +9,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool val1 = false;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   List<Widget> _widgetList = [
     TrackOrder(),
     ProfilePage(),
@@ -16,6 +22,7 @@ class _HomePageState extends State<HomePage> {
 
   int _index = 0;
   Color _purple = HexColor('#603f8b');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
