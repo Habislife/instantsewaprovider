@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/application/classes/tracker/cart.dart';
 import 'package:provider/state/tracking_state.dart';
@@ -56,7 +57,7 @@ class _OngoingPageState extends State<OngoingPage>
                 // );
               },
               child: Icon(
-                Icons.qr_code_scanner_sharp,
+                MaterialCommunityIcons.qrcode_scan,
                 color: Colors.white,
               ),
             ),
@@ -296,11 +297,83 @@ class _OngoingPageState extends State<OngoingPage>
                           ),
                         ),
                       ),
+                      SizedBox(height: 60,),
+                      Row(
+                        children: [
+                          Container(
+                            height: 50,
+                            margin: EdgeInsets.symmetric(horizontal: 30),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: SizedBox(
+                                height: 45.0,
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                child: RaisedButton(
+                                  color: _purple,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(25.0)),
+                                  onPressed: () {
+                                    //logout();
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 14.0, vertical: 12.0),
+                                    child: Text(
+                                      'Book',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 17.0),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 50,
+                            margin: EdgeInsets.symmetric(horizontal: 1),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: SizedBox(
+                                height: 45.0,
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                child: RaisedButton(
+                                  color: _purple,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(25.0)),
+                                  onPressed: () {
+                                    //logout();
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 14.0, vertical: 12.0),
+                                    child: Text(
+                                      'Cancel',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 17.0),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+
                     ],
-                  )),
+                  )
+              ),
             ],
           );
         },
+
       ),
     );
   }

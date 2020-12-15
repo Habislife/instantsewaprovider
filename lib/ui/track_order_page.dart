@@ -8,6 +8,7 @@ import 'package:provider/util/hexcode.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 class TrackOrder extends StatefulWidget {
+  int query;
   @override
   _TrackOrderState createState() => _TrackOrderState();
 }
@@ -21,18 +22,53 @@ class _TrackOrderState extends State<TrackOrder>
   void initState() {
     _trackingState.setState((orderState) => orderState.getOngoingProject());
     _trackingState.setState((orderState) => orderState.getCompletedProject());
+    _trackingState.setState((orderState) =>orderState.getCancelledProject());
     _isLoading = false;
     super.initState();
   }
 
   Widget build(BuildContext context) {
+    String query;
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: Text('Track Order'),
           centerTitle: true,
           backgroundColor: _purple,
+          leading: IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              //Navigator.pushNamed(context, homeRoute);
+            },
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (BuildContext context) => Refresh(
+                  //       operationId: widget.orderId,
+                  //     ),
+                  //   ),
+                  // );
+                },
+                child: IconButton(
+                  icon: Icon(Icons.refresh),
+                  onPressed: (){
+                    setState(() {
+                      _trackingState.setState((orderState) => orderState.getOngoingProject());
+                      _trackingState.setState((orderState) => orderState.getCompletedProject());
+                      _trackingState.setState((orderState) =>orderState.getCancelledProject());
+                    });
+                  },
+                ),
+              ),
+            ),
+          ],
           bottom: TabBar(
             indicatorColor: Colors.white,
             indicatorWeight: 3.0,
@@ -44,6 +80,9 @@ class _TrackOrderState extends State<TrackOrder>
               ),
               Tab(
                 text: 'Completed',
+              ),
+              Tab(
+                text: 'Cancelled',
               ),
             ],
           ),
@@ -267,8 +306,117 @@ class _TrackOrderState extends State<TrackOrder>
                 );
               },
             ),
+            StateBuilder<TrackingState>(
+              observe: () => _trackingState,
+              builder: (context, model) {
+                return ListView(
+                  shrinkWrap: true,
+                  children: [
+                    ...model.state.cancelledProject.map(
+                          (orders) => Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              // Navigator.push(
+                              //   context,
+                              //MaterialPageRoute(
+                              // builder: (BuildContext context) =>
+                              //     CompletedPage(orderId: orders.id,
+                              //     cartName: orders.cartName),
+                              //   ),
+                              //);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Container(
+                                height:
+                                (MediaQuery.of(context).size.height) * 0.15,
+                                decoration: BoxDecoration(
+                                  color: Colors.white10,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Card(
+                                  elevation: 0.5,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              orders.cartName,
+                                              style: GoogleFonts.openSans(
+                                                textStyle: TextStyle(
+                                                  color: Colors.black87,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ),
+                                            Text(
+                                              DateFormat.yMMMMd()
+                                                  .add_jm()
+                                                  .format(orders.startTime),
+                                              style: GoogleFonts.openSans(
+                                                textStyle: TextStyle(
+                                                  color: Colors.black54,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.circle,
+                                              color: orders.status ==
+                                                  'Cancelled'
+                                                  ? Colors.redAccent
+                                                  : orders.status == 'Completed'
+                                                  ? Colors.blueAccent
+                                                  : Colors.yellowAccent,
+                                              size: 13,
+                                            ),
+                                            Text(
+                                              orders.status,
+                                              style: GoogleFonts.openSans(
+                                                textStyle: TextStyle(
+                                                  color: Colors.black87,
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ],
         ),
+
       ),
     );
   }
