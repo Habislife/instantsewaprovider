@@ -15,7 +15,6 @@ class _AllCategoryListState extends State<AllCategoryList>
     with AutomaticKeepAliveClientMixin {
   List<String> subCategoryList = [];
   final _categoriesStateRM = RM.get<HomeState>();
-  bool _isSelected = false;
 
   @override
   void initState() {
@@ -38,7 +37,14 @@ class _AllCategoryListState extends State<AllCategoryList>
             child: RaisedButton(
               color: Colors.white,
               shape: StadiumBorder(),
-              onPressed: () {},
+              onPressed: () async {
+                subCategoryList.length > 2
+                    ? await _categoriesStateRM.setState(
+                        (category) => category.addServices(subCategoryList),
+                      )
+                    // ignore: unnecessary_statements
+                    : null;
+              },
               child: Text(
                 'Next',
                 style: TextStyle(color: Colors.black, fontSize: 18),

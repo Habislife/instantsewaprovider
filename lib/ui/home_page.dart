@@ -4,6 +4,8 @@ import 'package:provider/ui/profile_page.dart';
 import 'package:provider/ui/track_order_page.dart';
 import 'package:provider/util/hexcode.dart';
 
+import 'track_order_page.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -17,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<Widget> _widgetList = [
-    AllCategoryList(),
+    TrackOrder(),
     ProfilePage(),
   ];
 

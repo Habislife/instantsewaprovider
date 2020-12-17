@@ -7,8 +7,12 @@ import 'package:provider/application/classes/errors/common_error.dart';
 import 'package:provider/application/storage/localstorage.dart';
 import 'package:provider/application/storage/storage_keys.dart';
 import 'package:provider/router/route_constants.dart';
+import 'package:provider/state/home_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
+
+import '../router/route_constants.dart';
+import '../router/route_constants.dart';
 
 abstract class AuthRepository {
   Future signIn({
@@ -30,6 +34,7 @@ class AuthRepositoryImpl implements AuthRepository {
     String password,
   }) async {
     try {
+      bool checker = false;
       Dio dio = new Dio();
       Response response = await InstantSewaAPI.dio
           .post("/auth/login", data: {"email": email, "password": password});
@@ -41,32 +46,43 @@ class AuthRepositoryImpl implements AuthRepository {
       await localStorage.setString('user', json.encode(response.data['user']));
       var user = jsonDecode(localStorage.getString('user'));
       await LocalStorage.setItem(TOKEN, accessToken);
-      if(user['address_address'] != null){
-        await LocalStorage.setItem(FUllNAME,user['fullname']);
-          await LocalStorage.setItem(PHONE,user['phoneno']);
-        await LocalStorage.setItem(USERNAME,user['username']);
-        await LocalStorage.setItem(ADDRESS_ADDRESS,user['address_address']);
-        await LocalStorage.setItem(ADDRESS_LATITUDE,user['address_latitude'].toString());
-        await LocalStorage.setItem(ADDRESS_LONGITUDE,user['address_longitude'].toString());
-        Navigator.pushNamed(RM.context,homeRoute);
-      }
-      else if(user['phoneno'] != null)
-        {
-          await LocalStorage.setItem(USERNAME,user['username']);
-          await LocalStorage.setItem(FUllNAME,user['fullname']);
-          await LocalStorage.setItem(PHONE,user['phoneno']);
-          Navigator.pushNamed(RM.context, addressUpdateRoute);
-        }
-      else if(user['fullname'] != null)
-      {
-        await LocalStorage.setItem(FUllNAME,user['fullname']);
-        await LocalStorage.setItem(USERNAME,user['username']);
+      final _categoriesStateRM = RM.get<HomeState>();
+      _categoriesStateRM.setState((categoryState) async {
+        checker = await categoryState.serviceCheck();
+      });
+      if (checker) {
+        await LocalStorage.setItem(FUllNAME, user['fullname']);
+        await LocalStorage.setItem(PHONE, user['phoneno']);
+        await LocalStorage.setItem(USERNAME, user['username']);
+        await LocalStorage.setItem(ADDRESS_ADDRESS, user['address_address']);
+        await LocalStorage.setItem(
+            ADDRESS_LATITUDE, user['address_latitude'].toString());
+        await LocalStorage.setItem(
+            ADDRESS_LONGITUDE, user['address_longitude'].toString());
+        Navigator.pushNamed(RM.context, homeRoute);
+      } else if (user['address_address'] != null) {
+        await LocalStorage.setItem(FUllNAME, user['fullname']);
+        await LocalStorage.setItem(PHONE, user['phoneno']);
+        await LocalStorage.setItem(USERNAME, user['username']);
+        await LocalStorage.setItem(ADDRESS_ADDRESS, user['address_address']);
+        await LocalStorage.setItem(
+            ADDRESS_LATITUDE, user['address_latitude'].toString());
+        await LocalStorage.setItem(
+            ADDRESS_LONGITUDE, user['address_longitude'].toString());
+        Navigator.pushNamed(RM.context, serviceSelectionRoute);
+      } else if (user['phoneno'] != null) {
+        await LocalStorage.setItem(USERNAME, user['username']);
+        await LocalStorage.setItem(FUllNAME, user['fullname']);
+        await LocalStorage.setItem(PHONE, user['phoneno']);
+        Navigator.pushNamed(RM.context, addressUpdateRoute);
+      } else if (user['fullname'] != null) {
+        await LocalStorage.setItem(FUllNAME, user['fullname']);
+        await LocalStorage.setItem(USERNAME, user['username']);
         Navigator.pushNamed(RM.context, phoneUpdateRoute);
+      } else {
+        await LocalStorage.setItem(USERNAME, user['username']);
+        Navigator.pushNamed(RM.context, fullNameUpdateRoute);
       }
-      else
-        {await LocalStorage.setItem(USERNAME,user['username']);
-          Navigator.pushNamed(RM.context, fullNameUpdateRoute);
-        }
       return;
     } on DioError catch (e) {
       showNetworkError(e);
@@ -96,28 +112,24 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future logOut() async
-  {
-    try{
-      final response = await InstantSewaAPI.dio.get("/auth/logout",options: Options(
-          headers: {
-            'Authorization':"Bearer ${LocalStorage.getItem(TOKEN)}"
-          }
-      ));
-      if(response.statusCode==200)
-        {
-          LocalStorage.deleteItem (TOKEN);
-          SharedPreferences localStorage = await SharedPreferences.getInstance();
-          await localStorage.remove('user');
-           LocalStorage.deleteItem(FUllNAME);
-           LocalStorage.deleteItem(PHONE);
-           LocalStorage.deleteItem(USERNAME);
-           LocalStorage.deleteItem(ADDRESS_ADDRESS);
-           LocalStorage.deleteItem(ADDRESS_LATITUDE);
-           LocalStorage.deleteItem(ADDRESS_LONGITUDE);
-
-        }
-    }on DioError catch (e) {
+  Future logOut() async {
+    try {
+      final response = await InstantSewaAPI.dio.get("/auth/logout",
+          options: Options(headers: {
+            'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
+          }));
+      if (response.statusCode == 200) {
+        LocalStorage.deleteItem(TOKEN);
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        await localStorage.remove('user');
+        LocalStorage.deleteItem(FUllNAME);
+        LocalStorage.deleteItem(PHONE);
+        LocalStorage.deleteItem(USERNAME);
+        LocalStorage.deleteItem(ADDRESS_ADDRESS);
+        LocalStorage.deleteItem(ADDRESS_LATITUDE);
+        LocalStorage.deleteItem(ADDRESS_LONGITUDE);
+      }
+    } on DioError catch (e) {
       showNetworkError(e);
     }
   }

@@ -8,83 +8,79 @@ import 'package:provider/application/classes/errors/common_error.dart';
 import 'package:provider/application/storage/localstorage.dart';
 import 'package:provider/application/storage/storage_keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
 
-abstract class HomeRepository
-{
+import '../router/route_constants.dart';
+
+abstract class HomeRepository {
   Future<bool> serviceCheck();
   Future<List<Category>> getCategory();
-  Future addServices({
-    @required List<String> subcategories
-  });
+  Future addServices({@required List<String> subcategories});
 }
-class HomeRepositoryImpl implements HomeRepository{
+
+class HomeRepositoryImpl implements HomeRepository {
   @override
-  Future<bool> serviceCheck() async{
+  Future<bool> serviceCheck() async {
     try {
       String id;
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       var user = jsonDecode(localStorage.getString('user'));
       id = user['id'].toString();
-      Response response = await InstantSewaAPI.dio
-          .post("/serviceChecker", data: {
-        "service_provider_id": id,
-      }, options: Options(headers: {
-        'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
-      }));
-      if(int.parse(response.data)<3)
-        {
-          return false;
-        }
-      else {
+      Response response = await InstantSewaAPI.dio.post("/serviceChecker",
+          data: {
+            "service_provider_id": id,
+          },
+          options: Options(headers: {
+            'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
+          }));
+      if (int.parse(response.data) < 3) {
+        return false;
+      } else {
         return true;
       }
-      } on DioError catch (e) {
+    } on DioError catch (e) {
       throw showNetworkError(e);
     }
   }
 
   @override
-  Future<List<Category>> getCategory()
-  async{
-      try {
+  Future<List<Category>> getCategory() async {
+    try {
       final response = await InstantSewaAPI.dio.get('/serviceChooser',
           options: Options(headers: {
             'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
           }));
       List _temp = response.data['data'];
-      List<Category> _categories = _temp
-          .map((category) => Category.fromJson(category))
-          .toList();
+      List<Category> _categories =
+          _temp.map((category) => Category.fromJson(category)).toList();
       return _categories;
     } on DioError catch (e) {
       throw showNetworkError(e);
     }
-
   }
 
   @override
-  Future addServices({List<String> subcategories}) async
-  {
+  Future addServices({List<String> subcategories}) async {
     try {
       String id;
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       var user = jsonDecode(localStorage.getString('user'));
       id = user['id'].toString();
       while (subcategories.isNotEmpty) {
-        Response response = await InstantSewaAPI.dio
-            .post("/serviceChecker", data: {
-          "service_provider_id": id,
-          "subcategories_id":subcategories[0]
-        },
+        print(subcategories[0]);
+        Response response = await InstantSewaAPI.dio.post("/serviceChooser",
+            data: {
+              "service_provider_id": id,
+              "subcategories_id": subcategories[0]
+            },
             options: Options(headers: {
-          'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
-        }));
+              'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
+            }));
         subcategories.remove(subcategories[0]);
       }
-    }
-    on DioError catch (e) {
+      Navigator.pushNamed(RM.context, homeRoute);
+    } on DioError catch (e) {
       throw showNetworkError(e);
     }
   }
-
 }
