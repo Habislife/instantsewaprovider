@@ -9,7 +9,6 @@ import 'package:provider/router/router.dart';
 import 'package:provider/state/auth_state.dart';
 import 'package:provider/state/service_profile_update_state.dart';
 import 'package:provider/state/tracking_state.dart';
-import 'package:provider/ui/profile_page.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 import 'application/storage/localstorage.dart';
 import 'repositories/home_repository.dart';

@@ -20,14 +20,9 @@ class TrackingRepositoryImpl implements TrackingRepository {
   @override
   Future<List<OperationTracker>> getOngoingProject() async{
     try {
-      String id;
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      var user = jsonDecode(localStorage.getString('user'));
-      id = user['id'].toString();
       Response response = await InstantSewaAPI.dio
-          .post("/providerongoingtracker", data: {
-        "service_provider_id": id,
-      }, options: Options(headers: {
+          .post("/providerongoingtracker",
+          options: Options(headers: {
         'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
       }));
       List _temp = response.data['data'];
@@ -42,14 +37,8 @@ class TrackingRepositoryImpl implements TrackingRepository {
   @override
   Future<List<OperationTracker>> getCompletedProject() async{
     try {
-      String id;
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      var user = jsonDecode(localStorage.getString('user'));
-      id = user['id'].toString();
       Response response = await InstantSewaAPI.dio
-          .post("/providercompletedtracker", data: {
-        "service_provider_id": id,
-      }, options: Options(headers: {
+          .post("/providercompletedtracker", options: Options(headers: {
         'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
       }));
       List _temp = response.data['data'];
@@ -85,14 +74,9 @@ class TrackingRepositoryImpl implements TrackingRepository {
   @override
   Future<List<OperationTracker>> getCancelledProject() async {
     try {
-      String id;
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      var user = jsonDecode(localStorage.getString('user'));
-      id = user['id'].toString();
       Response response = await InstantSewaAPI.dio
-          .post("/providercancelledtracker", data: {
-        "service_provider_id": id,
-      }, options: Options(headers: {
+          .post("/providercancelledtracker",
+          options: Options(headers: {
         'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
       }));
       List _temp = response.data['data'];

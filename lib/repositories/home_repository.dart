@@ -22,14 +22,7 @@ class HomeRepositoryImpl implements HomeRepository {
   @override
   Future<bool> serviceCheck() async {
     try {
-      String id;
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      var user = jsonDecode(localStorage.getString('user'));
-      id = user['id'].toString();
       Response response = await InstantSewaAPI.dio.post("/serviceChecker",
-          data: {
-            "service_provider_id": id,
-          },
           options: Options(headers: {
             'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
           }));
@@ -62,15 +55,10 @@ class HomeRepositoryImpl implements HomeRepository {
   @override
   Future addServices({List<String> subcategories}) async {
     try {
-      String id;
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      var user = jsonDecode(localStorage.getString('user'));
-      id = user['id'].toString();
       while (subcategories.isNotEmpty) {
         print(subcategories[0]);
         Response response = await InstantSewaAPI.dio.post("/serviceChooser",
             data: {
-              "service_provider_id": id,
               "subcategories_id": subcategories[0]
             },
             options: Options(headers: {
