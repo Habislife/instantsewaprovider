@@ -21,15 +21,10 @@ class ServiceProfileUpdateRepositoryImpl implements ServiceProfileUpdateReposito
   Future<bool> updateAddress({String address,double latitude,double longitude,})
   async
   {
-    String id;
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var user = jsonDecode(localStorage.getString('user'));
-    id = user['id'].toString();
     try {
       Dio dio = new Dio();
       Response response = await InstantSewaAPI.dio
           .post("/addressUpdate", data: {
-        "service_user_id": id,
         "address_address": address,
         "address_latitude": latitude,
         "address_longitude":longitude
@@ -49,15 +44,10 @@ class ServiceProfileUpdateRepositoryImpl implements ServiceProfileUpdateReposito
   @override
   Future<bool> updateFullName({String fullName,String gender}) async
   {
-    String id;
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var user = jsonDecode(localStorage.getString('user'));
-    id = user['id'].toString();
     try {
       Dio dio = new Dio();
       Response response = await InstantSewaAPI.dio
           .post("/fullnameUpdate", data: {
-        "id": id,
         "fullname": fullName,
         'gender': gender,
       }, options: Options(headers: {
@@ -74,15 +64,10 @@ class ServiceProfileUpdateRepositoryImpl implements ServiceProfileUpdateReposito
   @override
   Future<bool> updatePhone({String phoneNo}) async
   {
-    String id;
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var user = jsonDecode(localStorage.getString('user'));
-    id = user['id'].toString();
     try {
       Dio dio = new Dio();
       Response response = await InstantSewaAPI.dio
           .post("/phoneNoUpdate", data: {
-        "id": id,
         "phoneno": phoneNo
       }, options: Options(headers: {
         'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"

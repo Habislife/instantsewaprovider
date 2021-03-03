@@ -12,7 +12,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 import '../router/route_constants.dart';
-import '../router/route_constants.dart';
 
 abstract class AuthRepository {
   Future signIn({

@@ -302,11 +302,11 @@ class _OngoingPageState extends State<OngoingPage>
                         children: [
                           Container(
                             height: 50,
-                            margin: EdgeInsets.symmetric(horizontal: 30),
+                            margin: EdgeInsets.symmetric(horizontal:operation.status =='Pending'? 30:110),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Center(
+                            child:  Center(
                               child: SizedBox(
                                 height: 45.0,
                                 width: MediaQuery.of(context).size.width * 0.4,
@@ -315,13 +315,21 @@ class _OngoingPageState extends State<OngoingPage>
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(25.0)),
                                   onPressed: () {
-                                    //logout();
+                                    _trackingState.setState((s) =>operation.status =='Pending'?
+                                    s.bookOrCancel(operationId:operation.id,status: 1)
+                                        :operation.status =='Booked'?
+                                    s.operationStart(operationId:operation.id):
+                                    s.operationCompletion(operationId:operation.id)
+                                    );
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 14.0, vertical: 12.0),
                                     child: Text(
-                                      'Book',
+                                      operation.status =='Pending'?'Book'
+                                          :operation.status =='Booked'?'Start'
+                                          :'Completed'
+                                      ,
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w500,
@@ -338,7 +346,7 @@ class _OngoingPageState extends State<OngoingPage>
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Center(
+                            child:operation.status =='Pending'? Center(
                               child: SizedBox(
                                 height: 45.0,
                                 width: MediaQuery.of(context).size.width * 0.4,
@@ -347,8 +355,9 @@ class _OngoingPageState extends State<OngoingPage>
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(25.0)),
                                   onPressed: () {
-                                    //logout();
-                                  },
+                                    _trackingState.setState((s) => s.bookOrCancel(operationId:operation.id,status: 0)
+                                    );
+                                    },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 14.0, vertical: 12.0),
@@ -362,7 +371,7 @@ class _OngoingPageState extends State<OngoingPage>
                                   ),
                                 ),
                               ),
-                            ),
+                            ):null,
                           ),
                         ],
                       )

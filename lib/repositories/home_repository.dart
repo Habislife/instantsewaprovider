@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/application/InstantSewa_api.dart';
@@ -7,7 +5,6 @@ import 'package:provider/application/classes/category/category.dart';
 import 'package:provider/application/classes/errors/common_error.dart';
 import 'package:provider/application/storage/localstorage.dart';
 import 'package:provider/application/storage/storage_keys.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 import '../router/route_constants.dart';

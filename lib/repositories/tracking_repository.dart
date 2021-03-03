@@ -15,6 +15,19 @@ abstract class TrackingRepository {
   Future<List<Operation>> getOperation({
   @required String operationId
 });
+  Future<bool> bookOrCancelled({
+    @required String operationId,
+    @required int status
+  });
+  Future<bool> operationStart({
+    @required String operationId
+  });
+  Future<bool> operationCompletion({
+    @required String operationId
+  });
+  Future<bool> paymentCompletion({
+    @required String operationId
+  });
 }
 class TrackingRepositoryImpl implements TrackingRepository {
   @override
@@ -86,6 +99,77 @@ class TrackingRepositoryImpl implements TrackingRepository {
       return _serviceProviders;
     } on DioError catch (e) {
       throw showNetworkError(e);
+    }
+  }
+
+  @override
+  Future<bool> bookOrCancelled({String operationId, int status}) async
+  {
+    try {
+      Dio dio = new Dio();
+      Response response = await InstantSewaAPI.dio
+          .post("/bookstatuschanged", data: {
+        "operation_id": operationId,
+        "status": status,
+      }, options: Options(headers: {
+        'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
+      }));
+      return true;
+    } on DioError catch (e) {
+      showNetworkError(e);
+      return false;
+    }
+  }
+  @override
+  Future<bool> operationCompletion({String operationId}) async{
+    try {
+      Dio dio = new Dio();
+      Response response = await InstantSewaAPI.dio
+          .post("/completedstatuschanged", data: {
+        "operation_id": operationId
+      }, options: Options(headers: {
+        'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
+      }));
+      return true;
+    } on DioError catch (e) {
+      showNetworkError(e);
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> operationStart({String operationId}) async
+  {
+    try {
+      Dio dio = new Dio();
+      Response response = await InstantSewaAPI.dio
+          .post("/ongoingstatuschanged", data: {
+        "operation_id": operationId
+      }, options: Options(headers: {
+        'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
+      }));
+      return true;
+    } on DioError catch (e) {
+      showNetworkError(e);
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> paymentCompletion({String operationId}) async
+  {
+    try {
+      Dio dio = new Dio();
+      Response response = await InstantSewaAPI.dio
+          .post("/paymentstatuschanged", data: {
+        "operation_id": operationId
+      }, options: Options(headers: {
+        'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
+      }));
+      return true;
+    } on DioError catch (e) {
+      showNetworkError(e);
+      return false;
     }
   }
 }

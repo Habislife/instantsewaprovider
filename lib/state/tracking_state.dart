@@ -15,6 +15,48 @@ class TrackingState
   List<OperationTracker> get cancelledProject => _cancelled;
   List<Operation> _operation = [];
   List<Operation> get operation => _operation;
+  Future <bool> bookOrCancel({String operationId,int status})
+  async{
+    if(await _trackingRepository.bookOrCancelled(operationId: operationId, status: status))
+      {
+        return true ;
+      }
+    else{
+      return false;
+    }
+  }
+  Future <bool> operationStart({String operationId})
+  async{
+    if(await _trackingRepository.operationStart(operationId: operationId))
+    {
+      return true ;
+    }
+    else{
+      return false;
+    }
+  }
+
+  Future <bool> operationCompletion({String operationId})
+  async{
+    if(await _trackingRepository.operationCompletion(operationId: operationId))
+    {
+      return true ;
+    }
+    else{
+      return false;
+    }
+  }
+
+  Future <bool> paymentCompletion({String operationId})
+  async{
+    if(await _trackingRepository.paymentCompletion(operationId: operationId))
+    {
+      return true ;
+    }
+    else{
+      return false;
+    }
+  }
   Future getOngoingProject() async
   {
     _ongoing= await _trackingRepository.getOngoingProject();
