@@ -23,6 +23,7 @@ class HomeRepositoryImpl implements HomeRepository {
           options: Options(headers: {
             'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
           }));
+      print(int.parse(response.data));
       if (int.parse(response.data) < 3) {
         return false;
       } else {
@@ -63,6 +64,7 @@ class HomeRepositoryImpl implements HomeRepository {
             }));
         subcategories.remove(subcategories[0]);
       }
+      await LocalStorage.setItem(CHECKER,'true');
       Navigator.pushNamed(RM.context, homeRoute);
     } on DioError catch (e) {
       throw showNetworkError(e);

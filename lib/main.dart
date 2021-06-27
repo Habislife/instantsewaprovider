@@ -11,6 +11,7 @@ import 'package:provider/state/service_profile_update_state.dart';
 import 'package:provider/state/tracking_state.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 import 'application/storage/localstorage.dart';
+import 'application/storage/storage_keys.dart';
 import 'repositories/home_repository.dart';
 import 'state/home_state.dart';
 import 'ui/home_page.dart';
@@ -54,7 +55,9 @@ class InstantSewaProvider extends StatelessWidget {
                       ? phoneUpdateRoute
                       : LocalStorage.getItem(ADDRESS_ADDRESS) == null
                           ? addressUpdateRoute
-                          : homeRoute
+                          : LocalStorage.getItem(CHECKER) != 'true'
+              ? serviceSelectionRoute
+              : homeRoute
               : loginRoute,
         );
       },

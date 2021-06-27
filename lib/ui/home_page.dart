@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _widgetList = [
     TrackOrder(),
     ProfilePage(),
+
   ];
 
   int _index = 0;
@@ -50,6 +51,10 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.person),
               title: Text('Profile'),
             ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              title: Text('Notification'),
+            )
           ],
         ),
       ),

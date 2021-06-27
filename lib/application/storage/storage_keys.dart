@@ -9,3 +9,4 @@ const String ADDRESS_ADDRESS = 'address_address';
 const String ADDRESS_LONGITUDE = 'address_longitude';
 const String ADDRESS_LATITUDE = 'address_latitude';
 const String USERNAME = 'username';
+const String CHECKER = 'checker';

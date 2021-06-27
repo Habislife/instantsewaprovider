@@ -42,7 +42,6 @@ class _AllCategoryListState extends State<AllCategoryList>
                     ? await _categoriesStateRM.setState(
                         (category) => category.addServices(subCategoryList),
                       )
-                    // ignore: unnecessary_statements
                     : null;
               },
               child: Text(

@@ -33,7 +33,7 @@ class AuthRepositoryImpl implements AuthRepository {
     String password,
   }) async {
     try {
-      bool checker = false;
+      bool checker;
       Dio dio = new Dio();
       Response response = await InstantSewaAPI.dio
           .post("/auth/login", data: {"email": email, "password": password});
@@ -45,10 +45,18 @@ class AuthRepositoryImpl implements AuthRepository {
       await localStorage.setString('user', json.encode(response.data['user']));
       var user = jsonDecode(localStorage.getString('user'));
       await LocalStorage.setItem(TOKEN, accessToken);
-      final _categoriesStateRM = RM.get<HomeState>();
-      _categoriesStateRM.setState((categoryState) async {
-        checker = await categoryState.serviceCheck();
-      });
+      Response response2 = await InstantSewaAPI.dio.post("/serviceChecker",
+          options: Options(headers: {
+            'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
+          }));
+      if (int.parse(response2.data) < 3){
+        checker = false;
+      }
+      else{
+        checker = true;
+        await LocalStorage.setItem(CHECKER,'true');
+      }
+      print(checker);
       if (checker) {
         await LocalStorage.setItem(FUllNAME, user['fullname']);
         await LocalStorage.setItem(PHONE, user['phoneno']);
