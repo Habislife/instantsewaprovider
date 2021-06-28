@@ -7,7 +7,7 @@ import 'package:provider/application/classes/errors/common_error.dart';
 import 'package:provider/application/storage/localstorage.dart';
 import 'package:provider/application/storage/storage_keys.dart';
 import 'package:provider/router/route_constants.dart';
-import 'package:provider/state/home_state.dart';
+import 'package:provider/util/hexcode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
@@ -33,18 +33,70 @@ class AuthRepositoryImpl implements AuthRepository {
     String password,
   }) async {
     try {
+      Color _purple = HexColor('#603f8b');
       bool checker;
       Dio dio = new Dio();
       Response response = await InstantSewaAPI.dio
           .post("/auth/login", data: {"email": email, "password": password});
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      await localStorage.setString('user', json.encode(response.data['user']));
+      var user = jsonDecode(localStorage.getString('user'));
+      if(user['user_type'] != 'serviceuser')
+      {
+        showDialog(
+            context: RM.context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Warning!!",
+                  style: TextStyle(color: Colors.red),),
+                content:
+                const Text("Are you our certified ServiceProvider?"),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: Text(
+                      "Ok",
+                      style: TextStyle(color: _purple),
+                    ),
+                  ),
+                ],
+              );
+            }
+        );
+        return false;
+      }
+      else if(user['verified'] != 1)
+      {
+        showDialog(
+            context: RM.context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const
+                Text("Warning!!",
+                  style: TextStyle(color: Colors.red),),
+                content:
+                const Text("You are not verified "),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(false);
+                      Navigator.pushNamed(RM.context, otpRoute);
+                    },
+                    child: Text(
+                      "Ok",
+                      style: TextStyle(color: _purple),
+                    ),
+                  ),
+                ],
+              );
+            }
+        );
+        return false;
+      }
       String accessToken = response.data['accessToken'];
       String expiresAt = response.data['expiresAt'];
       await LocalStorage.setItem(TOKEN, accessToken);
       await LocalStorage.setItem(TOKEN_EXPIRATION, expiresAt);
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      await localStorage.setString('user', json.encode(response.data['user']));
-      var user = jsonDecode(localStorage.getString('user'));
-      await LocalStorage.setItem(TOKEN, accessToken);
       Response response2 = await InstantSewaAPI.dio.post("/serviceChecker",
           options: Options(headers: {
             'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
