@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_verification_code/flutter_verification_code.dart';
+import 'package:instantsewa/state/auth_state.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
 
 class OtpPage extends StatefulWidget {
   @override
@@ -6,6 +9,9 @@ class OtpPage extends StatefulWidget {
 }
 
 class _OtpPageState extends State<OtpPage> {
+  bool _onEditing = true;
+  String _code;
+  final _authStateRM = RM.get<AuthState>();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -38,13 +44,13 @@ class _OtpPageState extends State<OtpPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    "Verification",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(49, 39, 79, 1),
-                        fontSize: 30),
-                  ),
+                  // Text(
+                  //   "Verification",
+                  //   style: TextStyle(
+                  //       fontWeight: FontWeight.bold,
+                  //       color: Color.fromRGBO(49, 39, 79, 1),
+                  //       fontSize: 30),
+                  // ),
                   SizedBox(
                     height: 25,
                   ),
@@ -57,49 +63,42 @@ class _OtpPageState extends State<OtpPage> {
                   SizedBox(
                     height: 30,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromRGBO(196, 135, 198, .3),
-                            blurRadius: 20,
-                            offset: Offset(0, 10),
-                          )
-                        ]),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(color: Colors.grey[200]))),
-                          child: TextField(
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  labelText: "code",
-                                  labelStyle: TextStyle(color: Colors.grey))),
+                  Center(
+                    child: VerificationCode(
+                      textStyle: TextStyle(fontSize: 20.0, color: Colors.red[900]),
+                      underlineColor: Colors.amber,
+                      keyboardType: TextInputType.number,
+                      length: 5,
+                      // clearAll is NOT required, you can delete it
+                      // takes any widget, so you can implement your design
+                      clearAll: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          'clear all',
+                          style: TextStyle(
+                              fontSize: 14.0,
+                              decoration: TextDecoration.underline,
+                              color: Colors.blue[700]),
                         ),
-                      ],
+                      ),
+                      onCompleted: (String value) {
+                        setState(() {
+                          _code = value;
+                          _authStateRM.setState((verify) => verify.verificationCode(
+                            verificationToken:_code,
+                          ));
+                        });
+                      },
+                      onEditing: (bool value) {
+                        setState(() {
+                          _onEditing = value;
+                        });
+                        if (!_onEditing) FocusScope.of(context).unfocus();
+                      },
                     ),
                   ),
                   SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    height: 50,
-                    margin: EdgeInsets.symmetric(horizontal: 80),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40),
-                      color: Color.fromRGBO(49, 39, 79, 1),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Send",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
+                    height: 25,
                   ),
                   SizedBox(
                     height: 35,
@@ -114,9 +113,14 @@ class _OtpPageState extends State<OtpPage> {
                     height: 15,
                   ),
                   Center(
-                    child: Text(
-                      "resend",
-                      style: TextStyle(color: Color.fromRGBO(49, 39, 79, 1)),
+                    child: FlatButton(
+                      onPressed: () {
+                        _authStateRM.setState((verify) => verify.resendVerificationCode());
+                      },
+                      child: Text(
+                        "resend",
+                        style: TextStyle(color: Color.fromRGBO(49, 39, 79, 1)),
+                      ),
                     ),
                   ),
                 ],

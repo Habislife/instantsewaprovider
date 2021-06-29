@@ -23,4 +23,10 @@ class AuthState {
   Future logOut() async{
     await _authRepository.logOut();
   }
+  Future verificationCode({String verificationToken}) async {
+    await _authRepository.verificationCode(verificationToken: verificationToken);
+  }
+  Future resendVerificationCode() async {
+    await _authRepository.resendVerificationCode();
+  }
 }

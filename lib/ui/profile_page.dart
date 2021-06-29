@@ -573,6 +573,7 @@ class _ProfilePageState extends State<ProfilePage> {
         LocalStorage.deleteItem(PHONE);
         LocalStorage.deleteItem(FUllNAME);
         LocalStorage.deleteItem(ADDRESS_ADDRESS);
+        LocalStorage.deleteItem(VERIFICATION);
         Navigator.push(
             context,
             MaterialPageRoute(
