@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
-import 'package:instantsewa/state/auth_state.dart';
+import 'package:provider/state/auth_state.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 class OtpPage extends StatefulWidget {

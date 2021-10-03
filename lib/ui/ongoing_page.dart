@@ -23,7 +23,7 @@ class _OngoingPageState extends State<OngoingPage>
   @override
   void initState() {
     _trackingState.setState(
-        (orderState) => orderState.getOperation(operationId: widget.orderId));
+        (orderState) async => await orderState.getOperation(operationId: widget.orderId));
     _isLoading = false;
     super.initState();
   }
@@ -50,7 +50,7 @@ class _OngoingPageState extends State<OngoingPage>
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) => MapPage(),
+                  builder: (BuildContext context) => MapPage(orderId:widget.orderId),
                 ),
               );
             },

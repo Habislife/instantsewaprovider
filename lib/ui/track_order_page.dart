@@ -158,7 +158,7 @@ class _TrackOrderState extends State<TrackOrder>
                                               MainAxisAlignment.center,
                                           children: [
                                             Icon(
-                                              Icons.circle,
+                                              Icons.check_circle,
                                               color: orders.status == 'Pending'
                                                   ? Colors.orangeAccent
                                                   : orders.status == 'Ongoing'
@@ -265,7 +265,7 @@ class _TrackOrderState extends State<TrackOrder>
                                               MainAxisAlignment.center,
                                           children: [
                                             Icon(
-                                              Icons.circle,
+                                              Icons.check_circle,
                                               color: orders.status ==
                                                       'Cancelled'
                                                   ? Colors.redAccent
@@ -373,7 +373,7 @@ class _TrackOrderState extends State<TrackOrder>
                                               MainAxisAlignment.center,
                                           children: [
                                             Icon(
-                                              Icons.circle,
+                                              Icons.check_circle,
                                               color: orders.status ==
                                                       'Cancelled'
                                                   ? Colors.redAccent
