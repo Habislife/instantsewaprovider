@@ -3,6 +3,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/application/classes/tracker/cart.dart';
 import 'package:provider/state/tracking_state.dart';
+import 'package:provider/ui/map_page.dart';
 import 'package:provider/util/hexcode.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
@@ -43,24 +44,16 @@ class _OngoingPageState extends State<OngoingPage>
         centerTitle: true,
         backgroundColor: _purple,
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GestureDetector(
-              onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (BuildContext context) => GenerateQrCode(
-                //       operationId: widget.orderId,
-                //     ),
-                //   ),
-                // );
-              },
-              child: Icon(
-                MaterialCommunityIcons.qrcode_scan,
-                color: Colors.white,
-              ),
-            ),
+          IconButton(
+            icon: Icon(Icons.map),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => MapPage(),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -297,39 +290,49 @@ class _OngoingPageState extends State<OngoingPage>
                           ),
                         ),
                       ),
-                      SizedBox(height: 60,),
+                      SizedBox(
+                        height: 60,
+                      ),
                       Row(
                         children: [
                           Container(
                             height: 50,
-                            margin: EdgeInsets.symmetric(horizontal:operation.status =='Pending'? 30:110),
+                            margin: EdgeInsets.symmetric(
+                                horizontal:
+                                    operation.status == 'Pending' ? 30 : 110),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child:  Center(
+                            child: Center(
                               child: SizedBox(
                                 height: 45.0,
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 child: RaisedButton(
                                   color: _purple,
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(25.0)),
+                                      borderRadius:
+                                          BorderRadius.circular(25.0)),
                                   onPressed: () {
-                                    _trackingState.setState((s) =>operation.status =='Pending'?
-                                    s.bookOrCancel(operationId:operation.id,status: 1)
-                                        :operation.status =='Booked'?
-                                    s.operationStart(operationId:operation.id):
-                                    s.operationCompletion(operationId:operation.id)
-                                    );
+                                    _trackingState.setState((s) =>
+                                        operation.status == 'Pending'
+                                            ? s.bookOrCancel(
+                                                operationId: operation.id,
+                                                status: 1)
+                                            : operation.status == 'Booked'
+                                                ? s.operationStart(
+                                                    operationId: operation.id)
+                                                : s.operationCompletion(
+                                                    operationId: operation.id));
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 14.0, vertical: 12.0),
                                     child: Text(
-                                      operation.status =='Pending'?'Book'
-                                          :operation.status =='Booked'?'Start'
-                                          :'Completed'
-                                      ,
+                                      operation.status == 'Pending'
+                                          ? 'Book'
+                                          : operation.status == 'Booked'
+                                              ? 'Start'
+                                              : 'Completed',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w500,
@@ -346,43 +349,46 @@ class _OngoingPageState extends State<OngoingPage>
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child:operation.status =='Pending'? Center(
-                              child: SizedBox(
-                                height: 45.0,
-                                width: MediaQuery.of(context).size.width * 0.4,
-                                child: RaisedButton(
-                                  color: _purple,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(25.0)),
-                                  onPressed: () {
-                                    _trackingState.setState((s) => s.bookOrCancel(operationId:operation.id,status: 0)
-                                    );
-                                    },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 14.0, vertical: 12.0),
-                                    child: Text(
-                                      'Cancel',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 17.0),
+                            child: operation.status == 'Pending'
+                                ? Center(
+                                    child: SizedBox(
+                                      height: 45.0,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4,
+                                      child: RaisedButton(
+                                        color: _purple,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25.0)),
+                                        onPressed: () {
+                                          _trackingState.setState((s) =>
+                                              s.bookOrCancel(
+                                                  operationId: operation.id,
+                                                  status: 0));
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 14.0, vertical: 12.0),
+                                          child: Text(
+                                            'Cancel',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 17.0),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ),
-                            ):null,
+                                  )
+                                : null,
                           ),
                         ],
                       )
-
                     ],
-                  )
-              ),
+                  )),
             ],
           );
         },
-
       ),
     );
   }

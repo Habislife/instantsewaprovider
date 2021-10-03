@@ -57,7 +57,7 @@ class _MainDrawerState extends State<MainDrawer> {
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.white,
                   child: Text(
-                    'U',
+                    'B',
                     style: TextStyle(color: _purple),
                   ),
                 ),

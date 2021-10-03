@@ -22,7 +22,7 @@ class _TrackOrderState extends State<TrackOrder>
   void initState() {
     _trackingState.setState((orderState) => orderState.getOngoingProject());
     _trackingState.setState((orderState) => orderState.getCompletedProject());
-    _trackingState.setState((orderState) =>orderState.getCancelledProject());
+    _trackingState.setState((orderState) => orderState.getCancelledProject());
     _isLoading = false;
     super.initState();
   }
@@ -36,36 +36,30 @@ class _TrackOrderState extends State<TrackOrder>
           title: Text('Track Order'),
           centerTitle: true,
           backgroundColor: _purple,
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              //Navigator.pushNamed(context, homeRoute);
-            },
-          ),
           actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (BuildContext context) => Refresh(
-                  //       operationId: widget.orderId,
-                  //     ),
-                  //   ),
-                  // );
+            GestureDetector(
+              onTap: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (BuildContext context) => Refresh(
+                //       operationId: widget.orderId,
+                //     ),
+                //   ),
+                // );
+              },
+              child: IconButton(
+                icon: Icon(Icons.refresh),
+                onPressed: () {
+                  setState(() {
+                    _trackingState.setState(
+                        (orderState) => orderState.getOngoingProject());
+                    _trackingState.setState(
+                        (orderState) => orderState.getCompletedProject());
+                    _trackingState.setState(
+                        (orderState) => orderState.getCancelledProject());
+                  });
                 },
-                child: IconButton(
-                  icon: Icon(Icons.refresh),
-                  onPressed: (){
-                    setState(() {
-                      _trackingState.setState((orderState) => orderState.getOngoingProject());
-                      _trackingState.setState((orderState) => orderState.getCompletedProject());
-                      _trackingState.setState((orderState) =>orderState.getCancelledProject());
-                    });
-                  },
-                ),
               ),
             ),
           ],
@@ -313,7 +307,7 @@ class _TrackOrderState extends State<TrackOrder>
                   shrinkWrap: true,
                   children: [
                     ...model.state.cancelledProject.map(
-                          (orders) => Column(
+                      (orders) => Column(
                         children: [
                           GestureDetector(
                             onTap: () {
@@ -330,7 +324,7 @@ class _TrackOrderState extends State<TrackOrder>
                               padding: const EdgeInsets.all(4.0),
                               child: Container(
                                 height:
-                                (MediaQuery.of(context).size.height) * 0.15,
+                                    (MediaQuery.of(context).size.height) * 0.15,
                                 decoration: BoxDecoration(
                                   color: Colors.white10,
                                   borderRadius: BorderRadius.circular(10),
@@ -339,13 +333,13 @@ class _TrackOrderState extends State<TrackOrder>
                                   elevation: 0.5,
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
                                             Text(
                                               orders.cartName,
@@ -376,16 +370,16 @@ class _TrackOrderState extends State<TrackOrder>
                                         padding: const EdgeInsets.all(8.0),
                                         child: Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                           children: [
                                             Icon(
                                               Icons.circle,
                                               color: orders.status ==
-                                                  'Cancelled'
+                                                      'Cancelled'
                                                   ? Colors.redAccent
                                                   : orders.status == 'Completed'
-                                                  ? Colors.blueAccent
-                                                  : Colors.yellowAccent,
+                                                      ? Colors.blueAccent
+                                                      : Colors.yellowAccent,
                                               size: 13,
                                             ),
                                             Text(
@@ -416,7 +410,6 @@ class _TrackOrderState extends State<TrackOrder>
             ),
           ],
         ),
-
       ),
     );
   }
