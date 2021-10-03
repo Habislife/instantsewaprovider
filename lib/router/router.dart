@@ -4,6 +4,7 @@ import 'package:provider/ui/Auth/login_page.dart';
 import 'package:provider/ui/Auth/signup_page.dart';
 import 'package:provider/ui/home_page.dart';
 import 'package:provider/ui/not_found_page_views.dart';
+import 'package:provider/ui/otp_page.dart';
 import 'package:provider/ui/profile_page.dart';
 import 'package:provider/ui/user_address_page.dart';
 import 'package:provider/ui/user_info_page.dart';
@@ -32,6 +33,8 @@ class Routers {
          return MaterialPageRoute(builder: (_) => TrackOrder());
       case serviceSelectionRoute:
         return MaterialPageRoute(builder: (_) => AllCategoryList());
+      case otpRoute:
+        return MaterialPageRoute(builder: (_) => OtpPage());
       default:
         return MaterialPageRoute(builder: (_) => NotFoundPage());
     }

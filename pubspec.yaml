@@ -38,13 +38,21 @@ dependencies:
   search_map_place: ^0.3.0
   qr_flutter: ^3.1.0
   flutter_vector_icons: ^0.3.0
-
+  circular_profile_avatar: ^1.0.6
+  image_picker: ^0.6.6+1
+  flutter_verification_code: ^0.2.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
-  circular_profile_avatar: ^1.0.6
-  image_picker: ^0.6.1+11
+  intl: ^0.16.1
+  date_format: ^1.0.9
+  firebase_messaging: any
+  firebase_core: any
+  firebase_auth: any
+  cloud_firestore: any
+  google_sign_in: any
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

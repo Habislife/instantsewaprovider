@@ -14,3 +14,4 @@ const String addressUpdateRoute = 'addressUpdate';
 const String phoneUpdateRoute = 'phoneUpdate';
 const String trackerRoute = 'trackingPage';
 const String serviceSelectionRoute = 'serviceSelectionPage';
+const String otpRoute = 'otpPage';

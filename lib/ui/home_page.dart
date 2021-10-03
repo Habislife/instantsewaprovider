@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/ui/categories_list_page.dart';
+import 'package:provider/ui/notification_message.dart';
 import 'package:provider/ui/profile_page.dart';
 import 'package:provider/ui/track_order_page.dart';
 import 'package:provider/util/hexcode.dart';
@@ -20,7 +20,9 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> _widgetList = [
     TrackOrder(),
+    NotificationMessage(),
     ProfilePage(),
+
   ];
 
   int _index = 0;
@@ -45,6 +47,10 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart),
               title: Text('Orders'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              title: Text('Notification'),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),

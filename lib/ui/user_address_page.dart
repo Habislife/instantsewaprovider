@@ -201,7 +201,7 @@ class _UserAddressPageState extends State<UserAddressPage> {
                                     _addressUpdateModel.setState(
                                             (addressState) async {
                                           await addressState.updateAddress();
-                                          Navigator.pushNamed(context, homeRoute);
+                                          Navigator.pushNamed(context, serviceSelectionRoute);
                                         },
                                         onError: (context, error) =>
                                             showSnackBar(
