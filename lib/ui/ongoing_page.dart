@@ -186,6 +186,34 @@ class _OngoingPageState extends State<OngoingPage>
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  operation.cashPay == '1'?
+                                  showDialog(
+                                      context: RM.context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text("Warning!!",
+                                            style: TextStyle(color: Colors.red),),
+                                          content:
+                                          const Text("Get the cash?"),
+                                          actions: <Widget>[
+                                            FlatButton(
+                                              onPressed: () => Navigator.of(context).pop(true),
+                                              child: Text(
+                                                "Ok",
+                                                style: TextStyle(color: _purple),
+                                              ),
+                                            ),
+                                            FlatButton(
+                                              onPressed: () => Navigator.of(context).pop(false),
+                                              child: Text(
+                                                "Not",
+                                                style: TextStyle(color: _purple),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      }
+                                  ):
                                   Row(
                                     children: [
                                       CircleAvatar(
