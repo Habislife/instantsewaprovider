@@ -203,14 +203,14 @@ class _TrackOrderState extends State<TrackOrder>
                         children: [
                           GestureDetector(
                             onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //MaterialPageRoute(
-                              // builder: (BuildContext context) =>
-                              //     CompletedPage(orderId: orders.id,
-                              //     cartName: orders.cartName),
-                              //   ),
-                              //);
+                              Navigator.push(
+                                context,
+                              MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  OngoingPage(orderId: orders.id,
+                                  cartName: orders.cartName),
+                                ),
+                              );
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),

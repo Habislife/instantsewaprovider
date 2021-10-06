@@ -350,7 +350,29 @@ class _OngoingPageState extends State<OngoingPage>
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: operation.status == 'Pending'
+                            child: operation.cashPay =='1'
+                                ? showDialog(
+                                context: RM.context,
+          builder: (BuildContext context) {
+          return AlertDialog(
+          title: const Text(
+          "Warning!!",
+          style: TextStyle(color: Colors.red),
+          ),
+          content: const Text("Are you our certified ServiceProvider?"),
+          actions: <Widget>[
+          FlatButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: Text(
+          "Ok",
+          style: TextStyle(color: _purple),
+          ),
+          ),
+          ],
+          );
+          })
+                                :
+                            operation.status == 'Pending'
                                 ? Center(
                                     child: SizedBox(
                                       height: 45.0,
