@@ -46,7 +46,7 @@ class AuthRepositoryImpl implements AuthRepository {
       String accessToken = response.data['accessToken'];
       String expiresAt = response.data['expiresAt'];
       await LocalStorage.setItem(TOKEN, accessToken);
-      if(user['user_type'] != 'serviceuser')
+      if(user['user_type'] != 'ServiceProvider')
       {
         LocalStorage.deleteItem(TOKEN);
         showDialog(
