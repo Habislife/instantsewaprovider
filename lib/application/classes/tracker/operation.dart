@@ -6,6 +6,7 @@ class Operation {
   String cartGroupName;
   String serviceUserName;
   String status;
+  String cashPay;
   String latitude;
   String longitude;
   DateTime startTime;
@@ -16,6 +17,7 @@ class Operation {
         cartGroupName = jsonMap['cartGroupName'],
         serviceUserName = jsonMap['serviceProviderName'],
         status = jsonMap['status'],
+        cashPay = jsonMap['cash_pay'],
         latitude = jsonMap['latitude'],
         longitude = jsonMap['longitude'],
         startTime =
