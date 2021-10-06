@@ -46,17 +46,17 @@ class AuthRepositoryImpl implements AuthRepository {
       String accessToken = response.data['accessToken'];
       String expiresAt = response.data['expiresAt'];
       await LocalStorage.setItem(TOKEN, accessToken);
-      if(user['user_type'] != 'ServiceProvider')
-      {
+      if (user['user_type'] != 'ServiceProvider') {
         LocalStorage.deleteItem(TOKEN);
         showDialog(
             context: RM.context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: const Text("Warning!!",
-                  style: TextStyle(color: Colors.red),),
-                content:
-                const Text("Are you our certified ServiceProvider?"),
+                title: const Text(
+                  "Warning!!",
+                  style: TextStyle(color: Colors.red),
+                ),
+                content: const Text("Are you our certified ServiceProvider?"),
                 actions: <Widget>[
                   FlatButton(
                     onPressed: () => Navigator.of(context).pop(false),
@@ -67,21 +67,18 @@ class AuthRepositoryImpl implements AuthRepository {
                   ),
                 ],
               );
-            }
-        );
+            });
         return false;
-      }
-      else if(user['verified'] != 1)
-      {
+      } else if (user['verified'] != 1) {
         showDialog(
             context: RM.context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: const
-                Text("Warning!!",
-                  style: TextStyle(color: Colors.red),),
-                content:
-                const Text("You are not verified "),
+                title: const Text(
+                  "Warning!!",
+                  style: TextStyle(color: Colors.red),
+                ),
+                content: const Text("You are not verified "),
                 actions: <Widget>[
                   FlatButton(
                     onPressed: () {
@@ -95,8 +92,7 @@ class AuthRepositoryImpl implements AuthRepository {
                   ),
                 ],
               );
-            }
-        );
+            });
         return false;
       }
       await LocalStorage.setItem(TOKEN_EXPIRATION, expiresAt);
@@ -104,17 +100,16 @@ class AuthRepositoryImpl implements AuthRepository {
           options: Options(headers: {
             'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
           }));
-      if (int.parse(response2.data) < 3){
+      if (int.parse(response2.data) < 3) {
         checker = false;
-      }
-      else{
+      } else {
         checker = true;
-        await LocalStorage.setItem(CHECKER,'true');
+        await LocalStorage.setItem(CHECKER, 'true');
       }
       print(checker);
       if (checker) {
         await LocalStorage.setItem(FUllNAME, user['fullname']);
-        await LocalStorage.setItem(VERIFICATION,user['verified']);
+        await LocalStorage.setItem(VERIFICATION, user['verified'].toString());
         await LocalStorage.setItem(PHONE, user['phoneno']);
         await LocalStorage.setItem(USERNAME, user['username']);
         await LocalStorage.setItem(ADDRESS_ADDRESS, user['address_address']);
@@ -125,7 +120,7 @@ class AuthRepositoryImpl implements AuthRepository {
         Navigator.pushNamed(RM.context, homeRoute);
       } else if (user['address_address'] != null) {
         await LocalStorage.setItem(FUllNAME, user['fullname']);
-        await LocalStorage.setItem(VERIFICATION,user['verified']);
+        await LocalStorage.setItem(VERIFICATION, user['verified'].toString());
         await LocalStorage.setItem(PHONE, user['phoneno']);
         await LocalStorage.setItem(USERNAME, user['username']);
         await LocalStorage.setItem(ADDRESS_ADDRESS, user['address_address']);
@@ -136,18 +131,18 @@ class AuthRepositoryImpl implements AuthRepository {
         Navigator.pushNamed(RM.context, serviceSelectionRoute);
       } else if (user['phoneno'] != null) {
         await LocalStorage.setItem(USERNAME, user['username']);
-        await LocalStorage.setItem(VERIFICATION,user['verified']);
+        await LocalStorage.setItem(VERIFICATION, user['verified'].toString());
         await LocalStorage.setItem(FUllNAME, user['fullname']);
         await LocalStorage.setItem(PHONE, user['phoneno']);
         Navigator.pushNamed(RM.context, addressUpdateRoute);
       } else if (user['fullname'] != null) {
         await LocalStorage.setItem(FUllNAME, user['fullname']);
-        await LocalStorage.setItem(VERIFICATION,user['verified']);
+        await LocalStorage.setItem(VERIFICATION, user['verified'].toString());
         await LocalStorage.setItem(USERNAME, user['username']);
         Navigator.pushNamed(RM.context, phoneUpdateRoute);
       } else {
         await LocalStorage.setItem(USERNAME, user['username']);
-        await LocalStorage.setItem(VERIFICATION,user['verified']);
+        await LocalStorage.setItem(VERIFICATION, user['verified'].toString());
         Navigator.pushNamed(RM.context, fullNameUpdateRoute);
       }
       return;
@@ -200,6 +195,7 @@ class AuthRepositoryImpl implements AuthRepository {
       showNetworkError(e);
     }
   }
+
   @override
   Future verificationCode({String verificationToken}) async {
     try {
@@ -215,18 +211,27 @@ class AuthRepositoryImpl implements AuthRepository {
           context: RM.context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title:  Text(response.data['message']==null?'ERROR':'Message',
-                style: TextStyle(color:response.data['message']==null? Colors.red:Colors.black),),
-              content:
-              Text(response.data['message']==null?'Error:220':response.data['message']),
+              title: Text(
+                response.data['message'] == null ? 'ERROR' : 'Message',
+                style: TextStyle(
+                    color: response.data['message'] == null
+                        ? Colors.red
+                        : Colors.black),
+              ),
+              content: Text(response.data['message'] == null
+                  ? 'Error:220'
+                  : response.data['message']),
               actions: <Widget>[
                 FlatButton(
                   onPressed: () async {
                     Navigator.of(context).pop(false);
-                    response.data['message']==null?null:await LocalStorage.setItem(VERIFICATION,'1');
-                    response.data['message']==null?null: Navigator.pushNamed(RM.context, loginRoute);
+                    response.data['message'] == null
+                        ? null
+                        : await LocalStorage.setItem(VERIFICATION, '1');
+                    response.data['message'] == null
+                        ? null
+                        : Navigator.pushNamed(RM.context, loginRoute);
                   },
-
                   child: Text(
                     "Ok",
                     style: TextStyle(color: _purple),
@@ -234,8 +239,7 @@ class AuthRepositoryImpl implements AuthRepository {
                 ),
               ],
             );
-          }
-      );
+          });
     } on DioError catch (e) {
       showNetworkError(e);
     }
@@ -246,20 +250,24 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       Color _purple = HexColor('#603f8b');
       Dio dio = new Dio();
-      Response response = await InstantSewaAPI.dio.get(
-          "/auth/resend",options: Options(
-          headers: {
-            'Authorization':"Bearer ${LocalStorage.getItem(TOKEN)}"
-          })
-      );
+      Response response = await InstantSewaAPI.dio.get("/auth/resend",
+          options: Options(headers: {
+            'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
+          }));
       showDialog(
           context: RM.context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title:  Text(response.data['message']==null?'ERROR':'Message',
-                style: TextStyle(color:response.data['message']==null? Colors.red:Colors.black),),
-              content:
-              Text(response.data['message']==null?response.data['error']:response.data['message']),
+              title: Text(
+                response.data['message'] == null ? 'ERROR' : 'Message',
+                style: TextStyle(
+                    color: response.data['message'] == null
+                        ? Colors.red
+                        : Colors.black),
+              ),
+              content: Text(response.data['message'] == null
+                  ? response.data['error']
+                  : response.data['message']),
               actions: <Widget>[
                 FlatButton(
                   onPressed: () => Navigator.of(context).pop(false),
@@ -270,8 +278,7 @@ class AuthRepositoryImpl implements AuthRepository {
                 ),
               ],
             );
-          }
-      );
+          });
       print(response.data);
     } on DioError catch (e) {
       showNetworkError(e);

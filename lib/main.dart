@@ -48,19 +48,19 @@ class InstantSewaProvider extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(primarySwatch: Colors.deepPurple),
           onGenerateRoute: Routers.onGenerateRoute,
-          initialRoute:LocalStorage.getItem(VERIFICATION) != null
-              ? otpRoute:
-          LocalStorage.getItem(TOKEN) != null
-              ? LocalStorage.getItem(FUllNAME) == null
-                  ? fullNameUpdateRoute
-                  : LocalStorage.getItem(PHONE) == null
-                      ? phoneUpdateRoute
-                      : LocalStorage.getItem(ADDRESS_ADDRESS) == null
-                          ? addressUpdateRoute
-                          : LocalStorage.getItem(CHECKER) != 'true'
-              ? serviceSelectionRoute
-              : homeRoute
-              : loginRoute,
+          initialRoute: LocalStorage.getItem(VERIFICATION) != null
+              ? otpRoute
+              : LocalStorage.getItem(TOKEN) != null
+                  ? LocalStorage.getItem(FUllNAME) == null
+                      ? fullNameUpdateRoute
+                      : LocalStorage.getItem(PHONE) == null
+                          ? phoneUpdateRoute
+                          : LocalStorage.getItem(ADDRESS_ADDRESS) == null
+                              ? addressUpdateRoute
+                              : LocalStorage.getItem(CHECKER) != 'true'
+                                  ? serviceSelectionRoute
+                                  : homeRoute
+                  : loginRoute,
         );
       },
     );
