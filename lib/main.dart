@@ -49,7 +49,7 @@ class InstantSewaProvider extends StatelessWidget {
           theme: ThemeData(primarySwatch: Colors.deepPurple),
           onGenerateRoute: Routers.onGenerateRoute,
           initialRoute: LocalStorage.getItem(TOKEN) != null
-              ? LocalStorage.getItem(VERIFICATION) == null || LocalStorage.getItem(VERIFICATION) == '0'
+              ? LocalStorage.getItem(VERIFICATION) != null || LocalStorage.getItem(VERIFICATION) != '0'
                   ? LocalStorage.getItem(FUllNAME) == null
                       ? fullNameUpdateRoute
                       : LocalStorage.getItem(PHONE) == null
