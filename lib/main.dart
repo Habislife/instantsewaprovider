@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/application/storage/storage_keys.dart';
 import 'package:provider/repositories/auth_repository.dart';
+import 'package:provider/repositories/notification_repository.dart';
 import 'package:provider/repositories/service_profile_update_repository.dart';
 import 'package:provider/repositories/tracking_repository.dart';
 import 'package:provider/router/route_constants.dart';
 import 'package:provider/router/router.dart';
 import 'package:provider/state/auth_state.dart';
+import 'package:provider/state/notification_state.dart';
 import 'package:provider/state/service_profile_update_state.dart';
 import 'package:provider/state/tracking_state.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
@@ -41,6 +43,7 @@ class InstantSewaProvider extends StatelessWidget {
             ServiceProviderUpdateState(ServiceProfileUpdateRepositoryImpl())),
         Inject<TrackingState>(() => TrackingState(TrackingRepositoryImpl())),
         Inject<HomeState>(() => HomeState(HomeRepositoryImpl())),
+        Inject<NotificationState>(() => NotificationState(NotificationRepositoryImpl())),
       ],
       builder: (context) {
         return MaterialApp(

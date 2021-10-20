@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/application/InstantSewa_api.dart';
 import 'package:provider/application/classes/errors/common_error.dart';
+import 'package:provider/application/classes/transaction/transaction.dart';
 import 'package:provider/application/storage/localstorage.dart';
 import 'package:provider/application/storage/storage_keys.dart';
 import 'package:provider/router/route_constants.dart';
@@ -17,7 +18,7 @@ abstract class ServiceProfileUpdateRepository
   Future<bool> updatePhone({@required String phoneNo});
   Future<bool> updateProfile({@required String phoneNo,@required String email,@required String userName,@required String fullName});
   Future<bool> feedbackToSystem({@required String feedback});
-  Future<String> transactionAmount();
+  Future<List<Transaction>> transactionAmount();
 }
 
 class ServiceProfileUpdateRepositoryImpl implements ServiceProfileUpdateRepository
@@ -136,7 +137,7 @@ class ServiceProfileUpdateRepositoryImpl implements ServiceProfileUpdateReposito
   }
 
   @override
-  Future<String> transactionAmount() async
+  Future<List<Transaction>> transactionAmount() async
   {
     try {
       Dio dio = new Dio();
@@ -144,10 +145,13 @@ class ServiceProfileUpdateRepositoryImpl implements ServiceProfileUpdateReposito
           .get("/transactionamount", options: Options(headers: {
         'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
       }));
-      return response.data;
+      List _temp = response.data['data'];
+      List<Transaction> _stringLists = _temp
+          .map((operation) => Transaction.fromJson(operation))
+          .toList();
+      return _stringLists;
     } on DioError catch (e) {
       showNetworkError(e);
-      return 'error happened';
     }
   }
 }

@@ -15,9 +15,10 @@ class _BalancePageState extends State<BalancePage> {
   String amount;
   @override
   void initState() {
-    _balanceState.setState((balanceState) async =>
-    amount = await balanceState.transactionAmount());
-    _isLoading = false;
+    _balanceState.setState((balanceState) async {
+    await balanceState.transactionAmount();
+    _isLoading=true;
+    });
     super.initState();
   }
   @override
@@ -29,52 +30,67 @@ class _BalancePageState extends State<BalancePage> {
         centerTitle: true,
         backgroundColor: _purple,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Remaining Balance',
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
-            ),
-            Row(
+      body: StateBuilder<ServiceProviderUpdateState>(
+        observe: () =>_balanceState,
+        builder: (context,model){
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.attach_money),
                 Text(
-                  amount,
+                  'Remaining Balance',
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                 ),
-                Spacer(),
-                Center(
-                  child: RaisedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => RechargePage(),
-                        ),
-                      );
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    color: _purple,
-                    padding: EdgeInsets.fromLTRB(35, 12, 35, 12),
-                    child: Text(
-                      'Recharge',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17.0,
+                ...model.state.stringLists.map((cash) =>
+                Column(
+                  children:[
+                  cash.payment == null ?
+                      CircularProgressIndicator(
+                        value: null,
+                      ):Row(
+                    children: [
+                      Icon(Icons.attach_money),
+                      Text(
+                        cash.payment,
+                        style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                       ),
-                    ),
+                      Spacer(),
+                      Center(
+                        child: RaisedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) => RechargePage(),
+                              ),
+                            );
+                          },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+                          color: _purple,
+                          padding: EdgeInsets.fromLTRB(35, 12, 35, 12),
+                          child: Text(
+                            'Recharge',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+            ]
                 ),
+                ),
+
               ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

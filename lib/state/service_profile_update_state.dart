@@ -1,10 +1,12 @@
+import 'package:provider/application/classes/transaction/transaction.dart';
 import 'package:provider/repositories/service_profile_update_repository.dart';
 
 class ServiceProviderUpdateState
 {
   final ServiceProfileUpdateRepository _serviceProfileUpdateRepository;
   ServiceProviderUpdateState(this._serviceProfileUpdateRepository):assert(_serviceProfileUpdateRepository!=null);
-  String amount;
+  List<Transaction> _stringList = [];
+  List<Transaction> get stringLists => _stringList;
   Future<bool> updateAddress({String address,double latitude,double longitude})
   async
   {
@@ -60,8 +62,8 @@ class ServiceProviderUpdateState
     }
     return false;
   }
-  Future<String> transactionAmount() async
+  Future<List<Transaction>> transactionAmount() async
   {
-    return  await _serviceProfileUpdateRepository.transactionAmount();
+    _stringList = await _serviceProfileUpdateRepository.transactionAmount();
   }
 }
