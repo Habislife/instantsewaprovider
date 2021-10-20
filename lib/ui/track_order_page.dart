@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/state/tracking_state.dart';
+import 'package:provider/ui/complete_page.dart';
 import 'package:provider/ui/main_drawer.dart';
 import 'package:provider/ui/ongoing_page.dart';
 import 'package:provider/util/hexcode.dart';
@@ -207,7 +208,7 @@ class _TrackOrderState extends State<TrackOrder>
                                 context,
                               MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  OngoingPage(orderId: orders.id,
+                                  CompletePage(orderId: orders.id,
                                   cartName: orders.cartName),
                                 ),
                               );

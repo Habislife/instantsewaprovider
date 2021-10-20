@@ -7,7 +7,6 @@ import 'package:provider/application/classes/tracker/ongoing_tracker.dart';
 import 'package:provider/application/classes/tracker/operation.dart';
 import 'package:provider/application/storage/localstorage.dart';
 import 'package:provider/application/storage/storage_keys.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 abstract class TrackingRepository {
   Future<List<OperationTracker>> getOngoingProject();
   Future<List<OperationTracker>> getCompletedProject();
@@ -26,7 +25,9 @@ abstract class TrackingRepository {
     @required String operationId
   });
   Future<bool> paymentCompletion({
-    @required String operationId
+    @required String operationId,
+    @required int status,
+    @required String totalAmount
   });
 }
 class TrackingRepositoryImpl implements TrackingRepository {
@@ -156,13 +157,15 @@ class TrackingRepositoryImpl implements TrackingRepository {
   }
 
   @override
-  Future<bool> paymentCompletion({String operationId}) async
+  Future<bool> paymentCompletion({String operationId,int status,String totalAmount}) async
   {
     try {
       Dio dio = new Dio();
       Response response = await InstantSewaAPI.dio
           .post("/paymentstatuschanged", data: {
-        "operation_id": operationId
+        "operation_id": operationId,
+        "total_amount": totalAmount,
+        "status": status
       }, options: Options(headers: {
         'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
       }));

@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/application/classes/tracker/cart.dart';
 import 'package:provider/state/tracking_state.dart';
-import 'package:provider/ui/map_page.dart';
 import 'package:provider/util/hexcode.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
-class OngoingPage extends StatefulWidget {
+class CompletePage extends StatefulWidget {
   final String orderId, cartName;
 
-  const OngoingPage({Key key, this.orderId, this.cartName}) : super(key: key);
+  const CompletePage({Key key, this.orderId, this.cartName}) : super(key: key);
   @override
-  _OngoingPageState createState() => _OngoingPageState();
+  _CompletePageState createState() => _CompletePageState();
 }
 
-class _OngoingPageState extends State<OngoingPage>
+class _CompletePageState extends State<CompletePage>
     with AutomaticKeepAliveClientMixin {
   Color _purple = HexColor('#603f8b');
   final _trackingState = RM.get<TrackingState>();
@@ -43,20 +41,6 @@ class _OngoingPageState extends State<OngoingPage>
         title: Text(widget.cartName),
         centerTitle: true,
         backgroundColor: _purple,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.map),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      MapPage(orderId: widget.orderId),
-                ),
-              );
-            },
-          ),
-        ],
       ),
       body: StateBuilder<TrackingState>(
         observe: () => _trackingState,
@@ -294,13 +278,13 @@ class _OngoingPageState extends State<OngoingPage>
                       SizedBox(
                         height: 60,
                       ),
+                      operation.cashPay == '1'?
                       Row(
                         children: [
                           Container(
                             height: 50,
                             margin: EdgeInsets.symmetric(
-                                horizontal:
-                                    operation.status == 'Pending' ? 30 : 110),
+                                horizontal: 30),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -314,26 +298,13 @@ class _OngoingPageState extends State<OngoingPage>
                                       borderRadius:
                                           BorderRadius.circular(25.0)),
                                   onPressed: () {
-                                    _trackingState.setState((s) =>
-                                        operation.status == 'Pending'
-                                            ? s.bookOrCancel(
-                                                operationId: operation.id,
-                                                status: 1)
-                                            : operation.status == 'Booked'
-                                                ? s.operationStart(
-                                                    operationId: operation.id)
-                                                : s.operationCompletion(
-                                                    operationId: operation.id));
+                                    _trackingState.setState((s) => s.paymentCompletion(operationId: widget.orderId,status: 1, totalAmount: totalAmount(operation.cart).toString()));
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 14.0, vertical: 12.0),
                                     child: Text(
-                                      operation.status == 'Pending'
-                                          ? 'Book'
-                                          : operation.status == 'Booked'
-                                              ? 'Start'
-                                              : 'Completed',
+                                      'Get Cash',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w500,
@@ -350,9 +321,7 @@ class _OngoingPageState extends State<OngoingPage>
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child:
-                            operation.status == 'Pending'
-                                ? Center(
+                            child:Center(
                                     child: SizedBox(
                                       height: 45.0,
                                       width: MediaQuery.of(context).size.width *
@@ -363,10 +332,7 @@ class _OngoingPageState extends State<OngoingPage>
                                             borderRadius:
                                                 BorderRadius.circular(25.0)),
                                         onPressed: () {
-                                          _trackingState.setState((s) =>
-                                              s.bookOrCancel(
-                                                  operationId: operation.id,
-                                                  status: 0));
+                                          _trackingState.setState((s) => s.paymentCompletion(operationId: widget.orderId,status: 0, totalAmount: totalAmount(operation.cart).toString()));
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -382,10 +348,11 @@ class _OngoingPageState extends State<OngoingPage>
                                       ),
                                     ),
                                   )
-                                : null,
                           ),
                         ],
-                      )
+                      ):SizedBox(
+                        height: 60,
+                      ),
                     ],
                   )),
             ],
