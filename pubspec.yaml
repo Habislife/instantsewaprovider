@@ -40,6 +40,7 @@ dependencies:
   flutter_vector_icons: ^0.3.0
   circular_profile_avatar: ^1.0.6
   image_picker: ^0.6.6+1
+  flutter_inappwebview:
   flutter_verification_code: ^0.2.1
 
   # The following adds the Cupertino Icons font to your application.
