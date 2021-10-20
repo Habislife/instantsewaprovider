@@ -6,7 +6,9 @@ import 'package:provider/application/InstantSewa_api.dart';
 import 'package:provider/application/classes/errors/common_error.dart';
 import 'package:provider/application/storage/localstorage.dart';
 import 'package:provider/application/storage/storage_keys.dart';
+import 'package:provider/router/route_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
 
 abstract class ServiceProfileUpdateRepository
 {
@@ -14,6 +16,7 @@ abstract class ServiceProfileUpdateRepository
   Future<bool> updateAddress({@required String address,@required double latitude,@required double longitude});
   Future<bool> updatePhone({@required String phoneNo});
   Future<bool> updateProfile({@required String phoneNo,@required String email,@required String userName,@required String fullName});
+  Future<bool> feedbackToSystem({@required String feedback});
 }
 
 class ServiceProfileUpdateRepositoryImpl implements ServiceProfileUpdateRepository
@@ -105,6 +108,25 @@ class ServiceProfileUpdateRepositoryImpl implements ServiceProfileUpdateReposito
       await LocalStorage.setItem(ADDRESS_LATITUDE,user['address_latitude'].toString());
       await LocalStorage.setItem(ADDRESS_LONGITUDE,user['address_longitude'].toString());
 
+      return true;
+    } on DioError catch (e) {
+      showNetworkError(e);
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> feedbackToSystem({String feedback}) async
+  {
+    try {
+      Dio dio = new Dio();
+      Response response = await InstantSewaAPI.dio
+          .post("/feedbacj", data: {
+        "feedback": feedback
+      }, options: Options(headers: {
+        'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
+      }));
+      Navigator.pushNamed(RM.context, homeRoute);
       return true;
     } on DioError catch (e) {
       showNetworkError(e);

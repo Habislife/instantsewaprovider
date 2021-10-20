@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/ui/categories_list_page.dart';
+import 'package:provider/ui/feedback_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../util/hexcode.dart';
 import 'track_order_page.dart';
@@ -99,6 +100,10 @@ class _MainDrawerState extends State<MainDrawer> {
           title: Text('Feedback'),
           leading: Icon(Icons.feedback),
           trailing: Icon(Icons.arrow_right),
+          onTap: ()=>Navigator.push(context,
+          MaterialPageRoute(
+            builder: (BuildContext context) =>  FeedbackPage(),
+          ),),
         ),
         ListTile(
           title: Text('About us'),

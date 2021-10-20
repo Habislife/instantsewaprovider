@@ -53,4 +53,11 @@ class ServiceProviderUpdateState
       return false;
     }
   }
+  Future<bool> feedbackToSystem({String feedback})async{
+    if(await _serviceProfileUpdateRepository.feedbackToSystem(feedback: feedback)){
+      return true;
+    }
+    return false;
+  }
+
 }
