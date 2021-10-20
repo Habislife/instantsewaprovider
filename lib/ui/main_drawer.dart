@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:provider/ui/balance_page.dart';
 import 'package:provider/ui/categories_list_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../util/hexcode.dart';
@@ -94,6 +95,17 @@ class _MainDrawerState extends State<MainDrawer> {
           title: Text('Payment'),
           leading: Icon(Icons.attach_money),
           trailing: Icon(Icons.arrow_right),
+        ),
+        ListTile(
+          title: Text('Balance'),
+          leading: Icon(Icons.money_rounded),
+          trailing: Icon(Icons.arrow_right),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => BalancePage(),
+            ),
+          ),
         ),
         ListTile(
           title: Text('Feedback'),
