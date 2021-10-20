@@ -47,9 +47,9 @@ class TrackingState
     }
   }
 
-  Future <bool> paymentCompletion({String operationId})
+  Future <bool> paymentCompletion({String operationId,int status,String totalAmount})
   async{
-    if(await _trackingRepository.paymentCompletion(operationId: operationId))
+    if(await _trackingRepository.paymentCompletion(operationId: operationId,status: status,totalAmount: totalAmount))
     {
       return true ;
     }
