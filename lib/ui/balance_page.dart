@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/state/service_profile_update_state.dart';
 import 'package:provider/ui/recharge_page.dart';
 import 'package:provider/util/hexcode.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
 
 class BalancePage extends StatefulWidget {
   @override
@@ -8,6 +10,16 @@ class BalancePage extends StatefulWidget {
 }
 
 class _BalancePageState extends State<BalancePage> {
+  final _balanceState = RM.get<ServiceProviderUpdateState>();
+  bool _isLoading = false;
+  String amount;
+  @override
+  void initState() {
+    _balanceState.setState((balanceState) async =>
+    amount = await balanceState.transactionAmount());
+    _isLoading = false;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     Color _purple = HexColor('#603f8b');
@@ -31,7 +43,7 @@ class _BalancePageState extends State<BalancePage> {
               children: [
                 Icon(Icons.attach_money),
                 Text(
-                  '100',
+                  amount,
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                 ),
                 Spacer(),

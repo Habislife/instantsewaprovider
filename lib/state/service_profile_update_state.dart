@@ -4,6 +4,7 @@ class ServiceProviderUpdateState
 {
   final ServiceProfileUpdateRepository _serviceProfileUpdateRepository;
   ServiceProviderUpdateState(this._serviceProfileUpdateRepository):assert(_serviceProfileUpdateRepository!=null);
+  String amount;
   Future<bool> updateAddress({String address,double latitude,double longitude})
   async
   {
@@ -59,5 +60,8 @@ class ServiceProviderUpdateState
     }
     return false;
   }
-
+  Future<String> transactionAmount() async
+  {
+    return  await _serviceProfileUpdateRepository.transactionAmount();
+  }
 }

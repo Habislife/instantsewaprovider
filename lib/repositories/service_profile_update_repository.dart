@@ -17,6 +17,7 @@ abstract class ServiceProfileUpdateRepository
   Future<bool> updatePhone({@required String phoneNo});
   Future<bool> updateProfile({@required String phoneNo,@required String email,@required String userName,@required String fullName});
   Future<bool> feedbackToSystem({@required String feedback});
+  Future<String> transactionAmount();
 }
 
 class ServiceProfileUpdateRepositoryImpl implements ServiceProfileUpdateRepository
@@ -121,7 +122,7 @@ class ServiceProfileUpdateRepositoryImpl implements ServiceProfileUpdateReposito
     try {
       Dio dio = new Dio();
       Response response = await InstantSewaAPI.dio
-          .post("/feedbacj", data: {
+          .post("/feedback", data: {
         "feedback": feedback
       }, options: Options(headers: {
         'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
@@ -131,6 +132,22 @@ class ServiceProfileUpdateRepositoryImpl implements ServiceProfileUpdateReposito
     } on DioError catch (e) {
       showNetworkError(e);
       return false;
+    }
+  }
+
+  @override
+  Future<String> transactionAmount() async
+  {
+    try {
+      Dio dio = new Dio();
+      Response response = await InstantSewaAPI.dio
+          .get("/transactionamount", options: Options(headers: {
+        'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
+      }));
+      return response.data;
+    } on DioError catch (e) {
+      showNetworkError(e);
+      return 'error happened';
     }
   }
 }
