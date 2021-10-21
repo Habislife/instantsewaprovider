@@ -82,24 +82,8 @@ class _MainDrawerState extends State<MainDrawer> {
           ),
         ),
         ListTile(
-          title: Text('Track Order'),
-          leading: Icon(Icons.check_circle),
-          trailing: Icon(Icons.arrow_right),
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => TrackOrder(),
-            ),
-          ),
-        ),
-        ListTile(
-          title: Text('Payment'),
-          leading: Icon(Icons.attach_money),
-          trailing: Icon(Icons.arrow_right),
-        ),
-        ListTile(
           title: Text('Balance'),
-          leading: Icon(Icons.money_rounded),
+          leading: Icon(Icons.attach_money),
           trailing: Icon(Icons.arrow_right),
           onTap: () => Navigator.push(
             context,
@@ -112,10 +96,12 @@ class _MainDrawerState extends State<MainDrawer> {
           title: Text('Feedback'),
           leading: Icon(Icons.feedback),
           trailing: Icon(Icons.arrow_right),
-          onTap: ()=>Navigator.push(context,
-          MaterialPageRoute(
-            builder: (BuildContext context) =>  FeedbackPage(),
-          ),),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => FeedbackPage(),
+            ),
+          ),
         ),
         ListTile(
           title: Text('About us'),

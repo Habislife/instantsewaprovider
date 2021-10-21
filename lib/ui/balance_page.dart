@@ -16,11 +16,12 @@ class _BalancePageState extends State<BalancePage> {
   @override
   void initState() {
     _balanceState.setState((balanceState) async {
-    await balanceState.transactionAmount();
-    _isLoading=true;
+      await balanceState.transactionAmount();
+      _isLoading = true;
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     Color _purple = HexColor('#603f8b');
@@ -29,10 +30,23 @@ class _BalancePageState extends State<BalancePage> {
         title: Text('Balance'),
         centerTitle: true,
         backgroundColor: _purple,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              setState(() {
+                _balanceState.setState((balanceState) async {
+                  await balanceState.transactionAmount();
+                  _isLoading = true;
+                });
+              });
+            },
+          ),
+        ],
       ),
       body: StateBuilder<ServiceProviderUpdateState>(
-        observe: () =>_balanceState,
-        builder: (context,model){
+        observe: () => _balanceState,
+        builder: (context, model) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -43,50 +57,51 @@ class _BalancePageState extends State<BalancePage> {
                   'Remaining Balance',
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                 ),
-                ...model.state.stringLists.map((cash) =>
-                Column(
-                  children:[
-                  cash.payment == null ?
-                      CircularProgressIndicator(
-                        value: null,
-                      ):Row(
-                    children: [
-                      Icon(Icons.attach_money),
-                      Text(
-                        cash.payment,
-                        style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
-                      ),
-                      Spacer(),
-                      Center(
-                        child: RaisedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) => RechargePage(),
+                ...model.state.stringLists.map(
+                  (cash) => Column(children: [
+                    cash.payment == null
+                        ? CircularProgressIndicator(
+                            value: null,
+                          )
+                        : Row(
+                            children: [
+                              Icon(Icons.attach_money),
+                              Text(
+                                cash.payment,
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500),
                               ),
-                            );
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25.0),
+                              Spacer(),
+                              Center(
+                                child: RaisedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            RechargePage(),
+                                      ),
+                                    );
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                  color: _purple,
+                                  padding: EdgeInsets.fromLTRB(35, 12, 35, 12),
+                                  child: Text(
+                                    'Recharge',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 17.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          color: _purple,
-                          padding: EdgeInsets.fromLTRB(35, 12, 35, 12),
-                          child: Text(
-                            'Recharge',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 17.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-            ]
+                  ]),
                 ),
-                ),
-
               ],
             ),
           );

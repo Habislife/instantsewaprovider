@@ -15,10 +15,10 @@ class RechargePage extends StatefulWidget {
 }
 
 class _RechargePageState extends State<RechargePage> {
-  String userId ;
+  String userId;
   bool _isLoading = false;
   final ChromeSafariBrowserExample chromeSafariBrowserExample =
-  ChromeSafariBrowserExample(InAppBrowserExample());
+      ChromeSafariBrowserExample(InAppBrowserExample());
   @override
   void initState() {
     _loadUserData();
@@ -36,6 +36,7 @@ class _RechargePageState extends State<RechargePage> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     Color _purple = HexColor('#603f8b');
@@ -84,7 +85,7 @@ class _RechargePageState extends State<RechargePage> {
                             top: 4.0, bottom: 4.0, right: 40.0, left: 7.0),
                         onPressed: () {
                           chromeSafariBrowserExample.open(
-                            url: BASE_URL+'/recharge/'+userId+'/50',
+                            url: BASE_URL + '/recharge/' + userId + '/50',
                             options: ChromeSafariBrowserClassOptions(
                               android: AndroidChromeCustomTabsOptions(
                                 addDefaultShareMenuItem: true,
@@ -93,9 +94,7 @@ class _RechargePageState extends State<RechargePage> {
                                 keepAliveEnabled: true,
                                 showTitle: false,
                               ),
-                              ios: IOSSafariOptions(
-
-                              ),
+                              ios: IOSSafariOptions(),
                             ),
                           );
                         },
@@ -144,7 +143,7 @@ class _RechargePageState extends State<RechargePage> {
                             top: 4.0, bottom: 4.0, right: 40.0, left: 7.0),
                         onPressed: () {
                           chromeSafariBrowserExample.open(
-                            url: BASE_URL+'/recharge/'+userId+'/150',
+                            url: BASE_URL + '/recharge/' + userId + '/150',
                             options: ChromeSafariBrowserClassOptions(
                               android: AndroidChromeCustomTabsOptions(
                                 addDefaultShareMenuItem: true,
@@ -153,9 +152,7 @@ class _RechargePageState extends State<RechargePage> {
                                 keepAliveEnabled: true,
                                 showTitle: false,
                               ),
-                              ios: IOSSafariOptions(
-
-                              ),
+                              ios: IOSSafariOptions(),
                             ),
                           );
                         },
@@ -204,7 +201,7 @@ class _RechargePageState extends State<RechargePage> {
                             top: 4.0, bottom: 4.0, right: 40.0, left: 7.0),
                         onPressed: () {
                           chromeSafariBrowserExample.open(
-                            url: BASE_URL+'/recharge/'+userId+'/200',
+                            url: BASE_URL + '/recharge/' + userId + '/200',
                             options: ChromeSafariBrowserClassOptions(
                               android: AndroidChromeCustomTabsOptions(
                                 addDefaultShareMenuItem: true,
@@ -213,9 +210,7 @@ class _RechargePageState extends State<RechargePage> {
                                 keepAliveEnabled: true,
                                 showTitle: false,
                               ),
-                              ios: IOSSafariOptions(
-
-                              ),
+                              ios: IOSSafariOptions(),
                             ),
                           );
                         },
