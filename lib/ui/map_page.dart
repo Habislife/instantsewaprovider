@@ -6,28 +6,32 @@ import 'package:provider/util/hexcode.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 class MapPage extends StatefulWidget {
- final  String orderId;
-  const  MapPage({Key key, this.orderId}) : super(key: key);
+  final String orderId, latitude, longitude;
+
+  const MapPage({Key key, this.orderId, this.latitude, this.longitude})
+      : super(key: key);
   @override
   _MapPageState createState() => _MapPageState();
 }
 
-class _MapPageState extends State<MapPage>  with AutomaticKeepAliveClientMixin {
-  final _trackingState = RM.get<TrackingState>();
-  bool _isLoading = false;
+class _MapPageState extends State<MapPage> {
   Completer<GoogleMapController> _controller = Completer();
-
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
   }
-  @override
-  void initState() {
-    _trackingState.setState(
-            (orderState) async => await orderState.getOperation(operationId: widget.orderId));
-    _isLoading = false;
-    super.initState();
+
+  Set<Marker> _createMarker(double lat, double lang) {
+    return <Marker>[
+      Marker(
+        markerId: MarkerId('home'),
+        position: LatLng(lat, lang),
+        icon: BitmapDescriptor.defaultMarker,
+        infoWindow: InfoWindow(title: 'My Current Location'),
+      )
+    ].toSet();
   }
 
+  @override
   Widget build(BuildContext context) {
     Color _purple = HexColor('#603f8b');
     return Scaffold(
@@ -36,30 +40,16 @@ class _MapPageState extends State<MapPage>  with AutomaticKeepAliveClientMixin {
         centerTitle: true,
         backgroundColor: _purple,
       ),
-      body: StateBuilder<TrackingState>(
-        observe: () => _trackingState,
-        builder: (context, model) {
-          return ListView(
-            children: [
-              ...model.state.operation.map((operation) => Column(
-                children: [
-                  GoogleMap(
-                    onMapCreated: _onMapCreated,
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(double.parse(operation.latitude),double.parse(operation.longitude)),
-                      zoom: 11.0,
-                    ),
-                  ),
-                ],
-              )),
-            ],
-          );
-        },
+      body: GoogleMap(
+        onMapCreated: _onMapCreated,
+        markers: _createMarker(
+            double.parse(widget.latitude), double.parse(widget.longitude)),
+        initialCameraPosition: CameraPosition(
+          target: LatLng(
+              double.parse(widget.latitude), double.parse(widget.longitude)),
+          zoom: 11.0,
+        ),
       ),
     );
   }
-
-  @override
-    // TODO: implement wantKeepAlive
-    bool get wantKeepAlive => true;
 }

@@ -8,9 +8,11 @@ import 'package:provider/util/hexcode.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
 class OngoingPage extends StatefulWidget {
-  final String orderId, cartName;
+  final String orderId, cartName, latitude, longitude;
 
-  const OngoingPage({Key key, this.orderId, this.cartName}) : super(key: key);
+  const OngoingPage(
+      {Key key, this.orderId, this.cartName, this.latitude, this.longitude})
+      : super(key: key);
   @override
   _OngoingPageState createState() => _OngoingPageState();
 }
@@ -50,8 +52,11 @@ class _OngoingPageState extends State<OngoingPage>
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      MapPage(orderId: widget.orderId),
+                  builder: (BuildContext context) => MapPage(
+                    orderId: widget.orderId,
+                    latitude: widget.latitude,
+                    longitude: widget.longitude,
+                  ),
                 ),
               );
             },
@@ -70,6 +75,7 @@ class _OngoingPageState extends State<OngoingPage>
                           children: [
                             ListView(
                               shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(4.0),
@@ -350,8 +356,7 @@ class _OngoingPageState extends State<OngoingPage>
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child:
-                            operation.status == 'Pending'
+                            child: operation.status == 'Pending'
                                 ? Center(
                                     child: SizedBox(
                                       height: 45.0,

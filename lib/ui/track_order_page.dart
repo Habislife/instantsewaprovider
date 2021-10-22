@@ -101,8 +101,11 @@ class _TrackOrderState extends State<TrackOrder>
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
                                       OngoingPage(
-                                          orderId: orders.id,
-                                          cartName: orders.cartName),
+                                    orderId: orders.id,
+                                    cartName: orders.cartName,
+                                    latitude: orders.latitude,
+                                    longitude: orders.longitude,
+                                  ),
                                 ),
                               );
                             },
@@ -206,10 +209,11 @@ class _TrackOrderState extends State<TrackOrder>
                             onTap: () {
                               Navigator.push(
                                 context,
-                              MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  CompletePage(orderId: orders.id,
-                                  cartName: orders.cartName),
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      CompletePage(
+                                          orderId: orders.id,
+                                          cartName: orders.cartName),
                                 ),
                               );
                             },
