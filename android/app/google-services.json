@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "628839564040",
+    "project_id": "instantsewa-cfad1",
+    "storage_bucket": "instantsewa-cfad1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628839564040:android:961f24e9d136a97b3aa2bd",
+        "android_client_info": {
+          "package_name": "com.example.instantsewa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628839564040-iqajfqsha8qps32a8kvr8ue5u7pctpkg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.instantsewa",
+            "certificate_hash": "900540db1275f45fe5cee3f9d82aad58d8ed125c"
+          }
+        },
+        {
+          "client_id": "628839564040-qu330q4i07ug24fsp3hhisd8abshfl2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChMPPTUq_DPXuBJP-yIGHgj-JmQ5OBnfw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628839564040-qu330q4i07ug24fsp3hhisd8abshfl2h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628839564040:android:cfe797a690f13f1f3aa2bd",
+        "android_client_info": {
+          "package_name": "com.example.provider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628839564040-qu330q4i07ug24fsp3hhisd8abshfl2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChMPPTUq_DPXuBJP-yIGHgj-JmQ5OBnfw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628839564040-qu330q4i07ug24fsp3hhisd8abshfl2h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
