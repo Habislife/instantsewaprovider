@@ -15,7 +15,7 @@ class Operation {
   Operation.fromJson(Map<String, dynamic> jsonMap)
       : id = jsonMap['identifier'].toString(),
         cartGroupName = jsonMap['cartGroupName'],
-        serviceUserName = jsonMap['serviceProviderName'],
+        serviceUserName = jsonMap['serviceUserName'],
         status = jsonMap['status'],
         cashPay = jsonMap['cash_pay'],
         latitude = jsonMap['latitude'],

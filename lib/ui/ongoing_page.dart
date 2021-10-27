@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/application/classes/tracker/cart.dart';
 import 'package:provider/state/tracking_state.dart';
 import 'package:provider/ui/map_page.dart';
+import 'package:provider/ui/track_order_page.dart';
 import 'package:provider/util/hexcode.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
@@ -39,8 +40,10 @@ class _OngoingPageState extends State<OngoingPage>
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(widget.cartName),
         centerTitle: true,
@@ -71,109 +74,111 @@ class _OngoingPageState extends State<OngoingPage>
               ...model.state.operation.map((operation) => Column(
                     children: [
                       ...operation.cart.map(
-                        (carts) => Column(
-                          children: [
-                            ListView(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Container(
-                                    height:
-                                        (MediaQuery.of(context).size.height) *
-                                            0.20,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white10,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Card(
-                                      elevation: 0.0,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                CircleAvatar(
-                                                  radius: 25.0,
-                                                  child: ClipRRect(
-                                                    child: SizedBox(
-                                                      width: 50.0,
-                                                      height: 50.0,
-                                                      child: Image.asset(
-                                                        carts.serviceName,
-                                                        fit: BoxFit.fill,
+                        (carts) => SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              ListView(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Container(
+                                      height:
+                                          (MediaQuery.of(context).size.height) *
+                                              0.20,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white10,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Card(
+                                        elevation: 0.0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  CircleAvatar(
+                                                    radius: 25.0,
+                                                    child: ClipRRect(
+                                                      child: SizedBox(
+                                                        width: 50.0,
+                                                        height: 50.0,
+                                                        child: Image.asset(
+                                                          carts.serviceName,
+                                                          fit: BoxFit.fill,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                Text(
-                                                  carts.serviceName,
-                                                  style: GoogleFonts.openSans(
-                                                    textStyle: TextStyle(
-                                                      color: Colors.black87,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w600,
+                                                  SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  Text(
+                                                    carts.serviceName,
+                                                    style: GoogleFonts.openSans(
+                                                      textStyle: TextStyle(
+                                                        color: Colors.black87,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                            Text(
-                                              'Price: ${carts.price}',
-                                              style: GoogleFonts.openSans(
-                                                textStyle: TextStyle(
-                                                  color: Colors.black54,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
+                                                ],
+                                              ),
+                                              Text(
+                                                'Price: ${carts.price}',
+                                                style: GoogleFonts.openSans(
+                                                  textStyle: TextStyle(
+                                                    color: Colors.black54,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'Quantity: ${carts.quantity}',
-                                                  style: GoogleFonts.openSans(
-                                                    textStyle: TextStyle(
-                                                      color: Colors.black54,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w600,
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    'Quantity: ${carts.quantity}',
+                                                    style: GoogleFonts.openSans(
+                                                      textStyle: TextStyle(
+                                                        color: Colors.black54,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                Spacer(),
-                                                Text(
-                                                  'Total: Rs${carts.totalAmount}',
-                                                  style: GoogleFonts.openSans(
-                                                    textStyle: TextStyle(
-                                                      color: Colors.black54,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w600,
+                                                  Spacer(),
+                                                  Text(
+                                                    'Total: Rs${carts.totalAmount}',
+                                                    style: GoogleFonts.openSans(
+                                                      textStyle: TextStyle(
+                                                        color: Colors.black54,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Padding(
@@ -330,6 +335,13 @@ class _OngoingPageState extends State<OngoingPage>
                                                     operationId: operation.id)
                                                 : s.operationCompletion(
                                                     operationId: operation.id));
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            TrackOrder(),
+                                      ),
+                                    );
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -372,6 +384,13 @@ class _OngoingPageState extends State<OngoingPage>
                                               s.bookOrCancel(
                                                   operationId: operation.id,
                                                   status: 0));
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  TrackOrder(),
+                                            ),
+                                          );
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(

@@ -70,17 +70,7 @@ class _MainDrawerState extends State<MainDrawer> {
           trailing: Icon(Icons.arrow_right),
           onTap: () => Navigator.of(context).pop(),
         ),
-        ListTile(
-          title: Text('Services'),
-          leading: Icon(Icons.settings),
-          trailing: Icon(Icons.arrow_right),
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => AllCategoryList(),
-            ),
-          ),
-        ),
+
         ListTile(
           title: Text('Balance'),
           leading: Icon(Icons.attach_money),
