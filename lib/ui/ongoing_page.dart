@@ -119,15 +119,17 @@ class _OngoingPageState extends State<OngoingPage>
                                                   SizedBox(
                                                     width: 20,
                                                   ),
-                                                  Text(
-                                                    carts.serviceName,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: GoogleFonts.openSans(
-                                                      textStyle: TextStyle(
-                                                        color: Colors.black87,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w600,
+                                                  Expanded(
+                                                    child: Text(
+                                                      carts.serviceName,
+                                                      style:
+                                                          GoogleFonts.openSans(
+                                                        textStyle: TextStyle(
+                                                          color: Colors.black87,
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
