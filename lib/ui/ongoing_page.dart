@@ -121,6 +121,7 @@ class _OngoingPageState extends State<OngoingPage>
                                                   ),
                                                   Text(
                                                     carts.serviceName,
+                                                    overflow: TextOverflow.ellipsis,
                                                     style: GoogleFonts.openSans(
                                                       textStyle: TextStyle(
                                                         color: Colors.black87,
