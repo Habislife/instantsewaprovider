@@ -551,10 +551,12 @@ class _ProfilePageState extends State<ProfilePage> {
         filename: name,
       ),
     });
-    String url = BASE_URL+"profileimageupdate";
+    String url = BASE_URL+"/profileimageupdate";
     Dio dio = new Dio();
     await dio
-        .post(url, data: data)
+        .post(url, data: data,options: Options(headers: {
+      'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
+    }))
         .then((response) => print(response))
         .catchError((error) => print(error));
   }
