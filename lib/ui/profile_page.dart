@@ -33,6 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String fullName;
   String phoneNumber;
   String address;
+  String profile_picture;
   bool _isLoading = false;
 
   @override
@@ -52,6 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
         address = LocalStorage.getItem(ADDRESS_ADDRESS);
         email = user['email'];
         phoneNumber = LocalStorage.getItem(PHONE);
+        profile_picture = LocalStorage.getItem(PROFILE_PICTURE);
         _isLoading = true;
       });
     }
@@ -461,9 +463,9 @@ class _ProfilePageState extends State<ProfilePage> {
         children: <Widget>[
           CircleAvatar(
             //"https://robohash.org/1?set=set2"
-            backgroundImage: _imageFile == null
+            backgroundImage: profile_picture == null
                 ? AssetImage("images/instant_sewa.png")
-                : FileImage(File(_imageFile.path)),
+                : NetworkImage(BASE_URL+'/img/'+profile_picture),
             radius: 70.0,
           ),
           Positioned(
@@ -557,7 +559,10 @@ class _ProfilePageState extends State<ProfilePage> {
         .post(url, data: data,options: Options(headers: {
       'Authorization': "Bearer ${LocalStorage.getItem(TOKEN)}"
     }))
-        .then((response) => print(response))
+        .then((response) {
+      LocalStorage.deleteItem(PROFILE_PICTURE);
+      LocalStorage.setItem(PROFILE_PICTURE, response.data);
+    })
         .catchError((error) => print(error));
   }
   void logout() async

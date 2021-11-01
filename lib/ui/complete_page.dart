@@ -6,6 +6,8 @@ import 'package:provider/ui/track_order_page.dart';
 import 'package:provider/util/hexcode.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
+import '../base_url.dart';
+
 class CompletePage extends StatefulWidget {
   final String orderId, cartName;
 
@@ -87,10 +89,12 @@ class _CompletePageState extends State<CompletePage>
                                                       child: SizedBox(
                                                         width: 50.0,
                                                         height: 50.0,
-                                                        child: Image.asset(
-                                                          carts.serviceName,
+                                                        child: operation.avatar==null? Image.asset(
+                                                          "images/photos/provider.png",
                                                           fit: BoxFit.fill,
-                                                        ),
+                                                        ):
+                                                        Image.network(BASE_URL+"/img/"+operation.avatar,
+                                                          fit: BoxFit.fill,),
                                                       ),
                                                     ),
                                                   ),

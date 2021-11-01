@@ -7,6 +7,7 @@ class Operation {
   String serviceUserName;
   String status;
   String cashPay;
+  String avatar;
   String latitude;
   String longitude;
   DateTime startTime;
@@ -20,6 +21,7 @@ class Operation {
         cashPay = jsonMap['cash_pay'],
         latitude = jsonMap['latitude'],
         longitude = jsonMap['longitude'],
+        avatar = jsonMap['serviceProviderAvatar'],
         startTime =
             new DateFormat("yyyy-MM-dd hh:mm:ss").parse(jsonMap['startTime']),
         completedTime =

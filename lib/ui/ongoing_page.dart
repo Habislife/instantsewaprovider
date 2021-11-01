@@ -8,6 +8,8 @@ import 'package:provider/ui/track_order_page.dart';
 import 'package:provider/util/hexcode.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
+import '../base_url.dart';
+
 class OngoingPage extends StatefulWidget {
   final String orderId, cartName, latitude, longitude;
 
@@ -209,10 +211,12 @@ class _OngoingPageState extends State<OngoingPage>
                                           child: SizedBox(
                                             width: 50.0,
                                             height: 50.0,
-                                            child: Image.asset(
+                                            child: operation.avatar==null? Image.asset(
                                               "images/photos/provider.png",
                                               fit: BoxFit.fill,
-                                            ),
+                                            ):
+                                            Image.network(BASE_URL+"/img/"+operation.avatar,
+                                              fit: BoxFit.fill,),
                                           ),
                                         ),
                                       ),

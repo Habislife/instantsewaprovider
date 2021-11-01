@@ -11,3 +11,4 @@ const String ADDRESS_LATITUDE = 'address_latitude';
 const String USERNAME = 'username';
 const String CHECKER = 'checker';
 const String VERIFICATION = 'verification';
+const String PROFILE_PICTURE = 'profile_picture';
