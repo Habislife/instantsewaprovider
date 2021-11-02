@@ -89,12 +89,10 @@ class _CompletePageState extends State<CompletePage>
                                                       child: SizedBox(
                                                         width: 50.0,
                                                         height: 50.0,
-                                                        child: operation.avatar==null? Image.asset(
-                                                          "images/photos/provider.png",
+                                                        child: Image.asset(
+                                                          carts.image,
                                                           fit: BoxFit.fill,
-                                                        ):
-                                                        Image.network(BASE_URL+"/img/"+operation.avatar,
-                                                          fit: BoxFit.fill,),
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
@@ -188,10 +186,12 @@ class _CompletePageState extends State<CompletePage>
                                           child: SizedBox(
                                             width: 50.0,
                                             height: 50.0,
-                                            child: Image.asset(
+                                            child:operation.avatar==null? Image.asset(
                                               "images/photos/provider.png",
                                               fit: BoxFit.fill,
-                                            ),
+                                            ):
+                                            Image.network(BASE_URL+"/img/"+operation.avatar,
+                                              fit: BoxFit.fill,)
                                           ),
                                         ),
                                       ),

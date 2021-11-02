@@ -112,7 +112,7 @@ class _OngoingPageState extends State<OngoingPage>
                                                         width: 50.0,
                                                         height: 50.0,
                                                         child: Image.asset(
-                                                          carts.serviceName,
+                                                          carts.image,
                                                           fit: BoxFit.fill,
                                                         ),
                                                       ),
